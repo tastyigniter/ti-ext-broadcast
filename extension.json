@@ -1,0 +1,9 @@
+{
+  "code": "igniter.pusher",
+  "name": "Pusher",
+  "description": "See new orders and updates in real-time using Pusher.",
+  "version": "0.1.0-beta.2",
+  "author": "SamPoyigi",
+  "icon": "fa-angle-double-down",
+  "homepage": "https://github.com/tastyigniter/ti-ext-pusher"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "igniter/pusher",
+  "type": "igniter-extension",
+  "keywords": ["tastyigniter", "pusher", "notification"],
+  "license": "MIT",
+  "require": {
+    "php": ">=7.0",
+    "pusher/pusher-php-server": "~3.0"
+  },
+  "minimum-stability": "dev"
+}
