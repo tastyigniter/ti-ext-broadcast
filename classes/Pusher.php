@@ -1,6 +1,8 @@
 <?php namespace Igniter\Pusher\Classes;
 
+use Admin\Models\Customers_model;
 use Igniter\Pusher\Models\Settings;
+use Input;
 use Main\Facades\Auth;
 use Pusher\Pusher as PusherBase;
 
@@ -34,6 +36,11 @@ class Pusher
     protected $pusher;
 
     /**
+     * @var \Igniter\Flame\Auth\Models\User
+     */
+    protected $authUser;
+
+    /**
      * Creates an instance of Pusher using config values
      */
     public function initialize()
@@ -41,7 +48,8 @@ class Pusher
         $this->key = Settings::get('key');
         $this->secret = Settings::get('secret');
         $this->appId = Settings::get('app_id');
-        array_push($this->options, 'encrypted', Settings::get('encrypted'));
+        $this->options['cluster'] = Settings::get('cluster');
+        $this->options['encrypted'] = Settings::get('encrypted');
         $this->pusher = new PusherBase($this->key, $this->secret, $this->appId, $this->options);
     }
 
@@ -54,6 +62,13 @@ class Pusher
         return $this->pusher;
     }
 
+    public function setAuthUser($user)
+    {
+        $this->authUser = $user;
+
+        return $this;
+    }
+
     /**
      * Handles the presence and private channel authentications
      * @param $channelName
@@ -62,17 +77,16 @@ class Pusher
      */
     public function auth($channelName, $socketId)
     {
-        $user = Auth::user();
-
         // Ensures logged in user owns the channel
-        if (!$this->checkUserChannel($user, $channelName)) {
+        if (!$this->checkUserChannel($channelName)) {
             // Otherwise Authentication failed
             $this->reject();
+
             return $this;
         }
 
         if ($this->channelIsPresence($channelName))
-            $this->allowPresence($channelName, $socketId, $user);
+            $this->allowPresence($channelName, $socketId, $this->authUser);
 
         if ($this->channelIsPrivate($channelName))
             $this->allowPrivate($channelName, $socketId);
@@ -90,7 +104,20 @@ class Pusher
     public function trigger($channel, $event, $data)
     {
         $this->pusher->trigger($channel, $event, $data, post('socket_id'));
+
         return $this;
+    }
+
+    public static function runEntryPoint()
+    {
+        $channelName = Input::post('channel_name');
+        $socketId = Input::post('socket_id');
+        if (!strlen($channelName) OR !strlen($socketId))
+            return;
+
+        $user = \App::runningInAdmin() ? \AdminAuth::user() : Auth::user();
+
+        self::instance()->setAuthUser($user)->auth($channelName, $socketId);
     }
 
     /**
@@ -150,7 +177,7 @@ class Pusher
             $user->getKey(),
             [
                 'id' => $user->getKey(),
-                'name' => $user->customer_name
+                'name' => $user instanceof Customers_model ? $user->customer_name : $user->staff_name,
             ]
         );
     }
