@@ -1,7 +1,7 @@
 {
-  "name": "igniter/pusher",
+  "name": "igniter/broadcast",
   "type": "igniter-extension",
-  "keywords": ["tastyigniter", "pusher", "notification"],
+  "keywords": ["tastyigniter", "broadcast", "notification"],
   "license": "MIT",
   "require": {
     "php": ">=7.1",

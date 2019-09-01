@@ -1,12 +1,9 @@
 {
-  "code": "igniter.pusher",
-  "name": "Pusher",
-  "description": "See new orders and updates in real-time using Pusher.",
-  "version": "0.1.0-beta.2",
+  "code": "igniter.broadcast",
+  "name": "Broadcast Events",
+  "description": "Push browser notifications in real-time from your TastyIgniter application.",
+  "version": "0.1.0-beta.3",
   "author": "SamPoyigi",
-  "icon": "fa-angle-double-down",
-  "homepage": "https://github.com/tastyigniter/ti-ext-pusher",
-  "require": {
-    "igniter.user": "*"
-  }
+  "icon": "fa-bullhorn",
+  "homepage": "https://github.com/tastyigniter/ti-ext-broadcast"
 }

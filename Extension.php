@@ -1,18 +1,24 @@
-<?php namespace Igniter\Pusher;
+<?php namespace Igniter\Broadcast;
 
-use Admin\Classes\AdminController;
-use Igniter\Pusher\Classes\Pusher;
-use Igniter\Pusher\Models\Settings;
+use Igniter\Broadcast\Classes\Manager;
 use System\Classes\BaseExtension;
 
 /**
- * Pusher Extension Information File
+ * Broadcast Extension Information File
  */
 class Extension extends BaseExtension
 {
+    public function register()
+    {
+        Manager::instance()->register($this->app);
+
+        $this->registerRequestRebindHandler();
+    }
+
     public function boot()
     {
-        $this->subscribeEvents();
+        if ($this->app->hasDatabase())
+            Manager::instance()->boot($this->app);
     }
 
     /**
@@ -23,7 +29,7 @@ class Extension extends BaseExtension
     public function registerComponents()
     {
         return [
-            'Igniter\Pusher\Components\Pusher' => 'pusher',
+            'Igniter\Broadcast\Components\Broadcast' => 'broadcast',
         ];
     }
 
@@ -31,35 +37,30 @@ class Extension extends BaseExtension
     {
         return [
             'settings' => [
-                'label' => 'Pusher Settings',
+                'label' => 'Broadcast Events Settings',
                 'description' => 'Manage pusher api and cluster settings.',
-                'icon' => 'fa fa-angle-double-down',
-                'model' => 'Igniter\Pusher\Models\Settings',
+                'icon' => 'fa fa-bullhorn',
+                'model' => 'Igniter\Broadcast\Models\Settings',
             ],
         ];
     }
 
-    protected function subscribeEvents()
+    public function registerEventBroadcasts()
     {
-        AdminController::extend(function ($controller) {
-            $controller->bindEvent('controller.afterConstructor', function ($controller) {
-                \Assets::putJsVars([
-                    'pusherKey' => Settings::get('key'),
-                    'pusherAuthUrl' => admin_url('pusher/auth'),
-                    'pusherCluster' => Settings::get('cluster'),
-                    'pusherCsrfToken' => csrf_token(),
-                    'pusherUser' => \AdminAuth::user(),
-                ]);
+        return [
+            'eloquent.saved: Igniter\Flame\ActivityLog\Models\Activity' => \Igniter\Broadcast\Events\BroadcastActivityCreated::class,
+        ];
+    }
 
-                \Assets::addJs('~/extensions/igniter/pusher/assets/js/admin-pusher.js', 'pusher.js');
+    protected function registerRequestRebindHandler()
+    {
+        $this->app->rebinding('request', function ($app, $request) {
+            $request->setUserResolver(function () use ($app) {
+                if ($app->runningInAdmin())
+                    return $app['admin.auth']->getUser();
+
+                return $app['auth']->getUser();
             });
-        });
-
-        \Event::listen('notification.sending', function ($activity, $recipients) {
-            $pusher = Pusher::instance();
-            foreach ($recipients as $user) {
-                $pusher->trigger('private-user'.$user->getKey(), 'notification', null);
-            }
         });
     }
 }

@@ -1,50 +1,83 @@
-# TastyIgniter Pusher Integration
+This extension integrates with [Laravel Broadcasting](https://laravel.com/docs/5.5/broadcasting) to allow you to receive browser notifications when certain events happen in TastyIgniter. Now you can receive instant updates directly from your website to all of your devices.
 
-### Installation
+### Configuration
+You need to fill in your applicable Pusher credentials under
+`System > Settings > Broadcast Events settings`. Follow the instructions given below for each social network you would like to use. 
 
-1. From the extension's admin settings page, fill in your applicable Pusher credentials. You will need your Pusher Secret, Pusher App ID, and Pusher key.
-2. Install the Igniter.User extension as they are dependencies for authenticating private and presence channels. This step is optional if you only want to use public channels.
-2. Add the Pusher component included with this extension to a layout or page. The component includes the pusher js library.
+Add the Broadcast component included with this extension to a layout or page. The component injects the required js libraries into the page.
 
 ### Usage
 
-**Use this JS to create a Pusher object:**
+**Example of Registering Event Broadcast**
+
+Here is an example of an extension registering an event broadcast class to be dispatched when system event `activityLogger.logCreated` is fired.
 
 ```
-var pusher = new Pusher('YOUR_PUSHER_KEY_GOES_HERE', {
-    encrypted: true
-});
+public function registerEventBroadcasts()
+{
+    return [
+        'activityLogger.logCreated' => \Igniter\Broadcast\Events\BroadcastActivityCreated::class,
+    ];
+}
 ```
 
-**Use this JS to connect to a Pusher public channel and bind to an event:**
+**Example of an Event Class**
+
+An event broadcast class should implement `Illuminate\Contracts\Broadcasting\ShouldBroadcast`.
 
 ```
-var channel = pusher.subscribe('PUBLIC_CHANNEL_NAME');
-channel.bind('test', function(data) {
-    console.log("Test: " + data);
-});
+class BroadcastActivityCreated implements \Illuminate\Contracts\Broadcasting\ShouldBroadcast
+{
+    use Queueable, SerializesModels;
+
+    /**
+     * The activity model instance.
+     *
+     * @var \Igniter\Flame\ActivityLog\Models\Activity
+     */
+    public $activity;
+
+    /**
+     * BroadcastActivityCreated constructor.
+     * @param $activity
+     */
+    public function __construct($activity)
+    {
+        $this->activity = $activity;
+    }
+
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return Channel|Channel[]
+     */
+    public function broadcastOn()
+    {
+        return new PrivateChannel('admin.user.'.$this->activity->user_id);
+    }
+}
 ```
 
-**Use this JS to connect and authenticate a Pusher private channel and bind to an event:**
+For more information see [Defining Broadcast Events](https://laravel.com/docs/5.5/broadcasting#defining-broadcast-events)
 
+**Listening For Events on a User Authenticated Channel**
 ```
-var privateChannel = pusher.subscribe("private-PRIVATE_CHANNEL_NAME");
-privateChannel.bind('test', function(data) {
-    console.log("PRIVATE - test: " + data);
-});
-```
-
-**Use this JS to connect and authenticate a Pusher presence channel and bind to an event:**
-
-```
-var presenceChannel = pusher.subscribe('presence-PRESENCE_CHANNEL_NAME');
-presenceChannel.bind('test', function(data) {
-    console.log("PRESENCE - test: " + data);
-});
+Broadcast.user()
+    .listen('eventName', (e) => {
+        console.log(e);
+    })
 ```
 
-**Use this PHP to trigger an event to a pusher channel:**
+**Listening For Events on a Public Channel**
+```
+Broadcast.channel('channelName')
+    .listen('eventName', (e) => {
+        console.log(e);
+    })
+```
+
+**Use this PHP to manually dispatch a broadcast event:**
 
 ```
-Pusher::instance()->trigger($channel_name, $event_name, $data);
+Event::dispatch(new BroadcastActivityCreated($activity));
 ```
