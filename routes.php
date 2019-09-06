@@ -6,8 +6,4 @@ Route::group([
 ], function ($router) {
     $router->post('broadcasting/auth', '\\'.\Igniter\Broadcast\Classes\Controller::class.'@auth');
     $router->post(config('system.adminUri', '/admin').'/broadcasting/auth', '\\'.\Igniter\Broadcast\Classes\Controller::class.'@auth');
-
-    $router->get('/pusher', function () {
-        Artisan::call('schedule:run');
-    });
 });
