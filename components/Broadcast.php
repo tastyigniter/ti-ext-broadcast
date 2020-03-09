@@ -8,6 +8,6 @@ class Broadcast extends BaseComponent
 {
     public function onRun()
     {
-        $this->addJs('~/extensions/igniter/broadcast/assets/js/broadcast.js');
+        $this->addJs('$/igniter/broadcast/assets/js/broadcast.js');
     }
 }
