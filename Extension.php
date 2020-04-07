@@ -48,7 +48,7 @@ class Extension extends BaseExtension
     public function registerEventBroadcasts()
     {
         return [
-            'eloquent.saved: Igniter\Flame\ActivityLog\Models\Activity' => \Igniter\Broadcast\Events\BroadcastActivityCreated::class,
+            'activityLogger.logCreated' => \Igniter\Broadcast\Events\BroadcastActivityCreated::class,
         ];
     }
 

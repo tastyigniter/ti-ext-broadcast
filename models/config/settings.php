@@ -15,38 +15,38 @@ return [
         ],
         'fields' => [
             'app_id' => [
-                'label' => 'lang:igniter.pusher::default.label_app_id',
+                'label' => 'lang:igniter.broadcast::default.label_app_id',
                 'span' => 'left',
                 'type' => 'text',
             ],
             'key' => [
-                'label' => 'lang:igniter.pusher::default.label_key',
+                'label' => 'lang:igniter.broadcast::default.label_key',
                 'span' => 'right',
                 'type' => 'text',
             ],
             'secret' => [
-                'label' => 'lang:igniter.pusher::default.label_secret',
+                'label' => 'lang:igniter.broadcast::default.label_secret',
                 'span' => 'left',
-                'type' => 'text'
+                'type' => 'text',
             ],
             'cluster' => [
-                'label' => 'lang:igniter.pusher::default.label_cluster',
+                'label' => 'lang:igniter.broadcast::default.label_cluster',
                 'span' => 'right',
                 'type' => 'text',
             ],
             'encrypted' => [
-                'label' => 'lang:igniter.pusher::default.label_encrypted',
+                'label' => 'lang:igniter.broadcast::default.label_encrypted',
                 'span' => 'left',
                 'type' => 'switch',
                 'default' => TRUE,
             ],
         ],
         'rules' => [
-            ['app_id', 'lang:igniter.pusher::default.label_app_id', 'required|integer'],
-            ['key', 'lang:igniter.pusher::default.label_key', 'required|string'],
-            ['secret', 'lang:igniter.pusher::default.label_secret', 'required|string'],
-            ['cluster', 'lang:igniter.pusher::default.label_cluster', 'required|string'],
-            ['encrypted', 'lang:igniter.pusher::default.label_encrypted', 'required|string'],
+            ['app_id', 'lang:igniter.broadcast::default.label_app_id', 'required|integer'],
+            ['key', 'lang:igniter.broadcast::default.label_key', 'required|string'],
+            ['secret', 'lang:igniter.broadcast::default.label_secret', 'required|string'],
+            ['cluster', 'lang:igniter.broadcast::default.label_cluster', 'required|string'],
+            ['encrypted', 'lang:igniter.broadcast::default.label_encrypted', 'required|string'],
         ],
     ],
 ];
