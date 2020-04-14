@@ -82,7 +82,7 @@ class Manager
     {
         $channelName = 'main.user.'.(Auth::isLogged() ? Auth::getId() : 0);
         if ($controller instanceof AdminController)
-            $channelName = 'admin.user.'.AdminAuth::getId();
+            $channelName = 'admin.user.'.(AdminAuth::isLogged() ? AdminAuth::getId() : 0);
 
         Assets::putJsVars([
             'broadcast' => [
