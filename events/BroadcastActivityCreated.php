@@ -58,7 +58,7 @@ class BroadcastActivityCreated implements ShouldBroadcast
         return array_merge($this->activity->toArray(), [
             'id' => $this->activity->activity_id,
             'type' => $this->activity->type,
-            'title' => title_case(str_replace('_', ' ', snake_case($this->activity->type))),
+            'title' => $this->activity->title,
             'url' => $this->activity->url,
             'message' => strip_tags($this->activity->message),
         ]);
