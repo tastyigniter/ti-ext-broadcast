@@ -1,4 +1,6 @@
-<?php namespace Igniter\Broadcast\Classes;
+<?php
+
+namespace Igniter\Broadcast\Classes;
 
 use Admin\Classes\AdminController;
 use AdminAuth;
@@ -31,7 +33,7 @@ class Manager
      */
     public static function bindBroadcast($eventCode, $broadcastClass)
     {
-        Event::listen($eventCode, function () use ($eventCode, $broadcastClass) {
+        Event::listen($eventCode, function () use ($broadcastClass) {
             self::instance()->dispatch($broadcastClass, func_get_args());
         });
     }
