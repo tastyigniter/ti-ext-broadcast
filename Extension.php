@@ -1,4 +1,6 @@
-<?php namespace Igniter\Broadcast;
+<?php
+
+namespace Igniter\Broadcast;
 
 use Igniter\Broadcast\Classes\Manager;
 use System\Classes\BaseExtension;
