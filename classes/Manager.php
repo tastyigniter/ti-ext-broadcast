@@ -96,8 +96,6 @@ class Manager
             ],
         ]);
 
-        $controller->addMeta(['name' => 'csrf-token', 'content' => csrf_token()]);
-
         $controller->addJs('$/igniter/broadcast/assets/js/vendor/pusher/pusher.min.js', 'pusher-js');
         $controller->addJs('$/igniter/broadcast/assets/js/vendor/echo/echo.iife.js', 'echo-js');
         $controller->addJs('$/igniter/broadcast/assets/js/vendor/push/push.min.js', 'push-js');
