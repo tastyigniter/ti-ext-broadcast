@@ -8,7 +8,7 @@
   ],
   "license": "MIT",
   "require": {
-    "pusher/pusher-php-server": "~3.0"
+    "pusher/pusher-php-server": "~4.0"
   },
   "minimum-stability": "dev"
 }
