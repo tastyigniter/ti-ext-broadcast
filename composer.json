@@ -1,7 +1,11 @@
 {
   "name": "igniter/broadcast",
-  "type": "igniter-extension",
-  "keywords": ["tastyigniter", "broadcast", "notification"],
+  "type": "tastyigniter-extension",
+  "keywords": [
+    "tastyigniter",
+    "broadcast",
+    "notification"
+  ],
   "license": "MIT",
   "require": {
     "pusher/pusher-php-server": "~3.0"
