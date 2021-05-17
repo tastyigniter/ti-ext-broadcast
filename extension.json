@@ -2,7 +2,7 @@
   "code": "igniter.broadcast",
   "name": "Broadcast Events",
   "description": "Push browser notifications in real-time from your TastyIgniter application.",
-  "version": "v1.0.6",
+  "version": "v1.0.7",
   "author": "SamPoyigi",
   "icon": {
     "class": "fa fa-bullhorn",
