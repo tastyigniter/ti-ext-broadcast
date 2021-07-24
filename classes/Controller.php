@@ -2,9 +2,9 @@
 
 namespace Igniter\Broadcast\Classes;
 
-use Broadcast;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Broadcast;
 
 class Controller extends BaseController
 {

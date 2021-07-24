@@ -2,7 +2,7 @@
 
 namespace Igniter\Broadcast\Models;
 
-use Model;
+use Igniter\Flame\Database\Model;
 use System\Classes\ExtensionManager;
 
 class Settings extends Model

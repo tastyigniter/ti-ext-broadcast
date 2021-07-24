@@ -3,15 +3,15 @@
 namespace Igniter\Broadcast\Classes;
 
 use Admin\Classes\AdminController;
-use AdminAuth;
-use Assets;
-use Auth;
-use Broadcast;
-use Event;
+use Admin\Facades\AdminAuth;
 use Igniter\Broadcast\Models\Settings;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Event;
 use InvalidArgumentException;
+use Main\Facades\Auth;
 use System\Classes\BaseController;
+use System\Facades\Assets;
 
 class Manager
 {
