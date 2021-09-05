@@ -56,7 +56,10 @@ class Extension extends BaseExtension
     protected function registerRequestRebindHandler()
     {
         $this->app->rebinding('request', function ($app, $request) {
-            $request->setUserResolver(function () use ($app) {
+            if ($request instanceof \Dingo\Api\Http\Request)
+                return;
+
+            $request->setUserResolver(function () use ($app, $request) {
                 if ($app->runningInAdmin())
                     return $app['admin.auth']->getUser();
 
