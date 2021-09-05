@@ -52,6 +52,9 @@ class Manager
 
     public function boot(Application $app)
     {
+        if (!$app->hasDatabase() OR !Settings::isConfigured())
+            return;
+
         self::bindBroadcasts(Settings::findEventBroadcasts());
 
         Broadcast::channel('admin.user.{userId}', function ($user, $userId) {

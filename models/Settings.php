@@ -15,6 +15,13 @@ class Settings extends Model
     // Reference to field configuration
     public $settingsFieldsConfig = 'settings';
 
+    public static function isConfigured()
+    {
+        return strlen(self::get('app_id'))
+            AND strlen(self::get('key'))
+            AND strlen(self::get('secret'));
+    }
+
     public static function findRegisteredBroadcasts()
     {
         $results = [];

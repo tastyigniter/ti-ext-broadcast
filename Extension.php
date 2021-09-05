@@ -19,8 +19,7 @@ class Extension extends BaseExtension
 
     public function boot()
     {
-        if ($this->app->hasDatabase())
-            Manager::instance()->boot($this->app);
+        Manager::instance()->boot($this->app);
     }
 
     /**
