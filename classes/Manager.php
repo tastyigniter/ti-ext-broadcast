@@ -9,8 +9,8 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Event;
 use InvalidArgumentException;
+use Main\Classes\MainController;
 use Main\Facades\Auth;
-use System\Classes\BaseController;
 use System\Facades\Assets;
 
 class Manager
@@ -65,7 +65,13 @@ class Manager
             return (int)$user->customer_id === (int)$userId;
         });
 
-        BaseController::extend(function (BaseController $controller) {
+        AdminController::extend(function (AdminController $controller) {
+            $controller->bindEvent('controller.afterConstructor', function ($controller) {
+                $this->addAssetsToController($controller);
+            });
+        });
+
+        MainController::extend(function (MainController $controller) {
             $controller->bindEvent('controller.afterConstructor', function ($controller) {
                 $this->addAssetsToController($controller);
             });
