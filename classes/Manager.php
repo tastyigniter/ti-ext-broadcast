@@ -66,7 +66,7 @@ class Manager
         });
 
         AdminController::extend(function (AdminController $controller) {
-            $controller->bindEvent('controller.afterConstructor', function ($controller) {
+            $controller->bindEvent('controller.beforeRemap', function () use ($controller) {
                 $this->addAssetsToController($controller);
             });
         });
