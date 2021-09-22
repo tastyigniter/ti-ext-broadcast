@@ -1,83 +1,29 @@
-This extension integrates with [Laravel Broadcasting](https://laravel.com/docs/5.5/broadcasting) to allow you to receive browser notifications when certain events happen in TastyIgniter. Now you can receive instant updates directly from your website to all of your devices.
+### Introduction
 
-### Configuration
-You need to fill in your applicable Pusher credentials under
-`System > Settings > Broadcast Events settings`. Follow the instructions given below for each social network you would like to use. 
+This extension integrates with [Laravel Broadcasting](https://laravel.com/docs/broadcasting) to allow you to receive
+browser notifications when certain events happen in TastyIgniter. Now you can receive instant updates directly from your
+website to all of your devices.
 
-Add the Broadcast component included with this extension to a layout or page. The component injects the required js libraries into the page.
+### Documentation
 
-### Usage
+Documentation for TastyIgniter Broadcast extension can be found on
+the [TastyIgniter website](https://tastyigniter.com/docs/extensions/broadcast).
 
-**Example of Registering Event Broadcast**
+### Contributing
 
-Here is an example of an extension registering an event broadcast class to be dispatched when system event `activityLogger.logCreated` is fired.
+Thank you for considering contributing! The contribution guide can be found in
+the [TastyIgniter documentation](https://tastyigniter.com/docs/contribution-guide).
 
-```
-public function registerEventBroadcasts()
-{
-    return [
-        'activityLogger.logCreated' => \Igniter\Broadcast\Events\BroadcastActivityCreated::class,
-    ];
-}
-```
+### Code of Conduct
 
-**Example of an Event Class**
+In order to ensure that the [TastyIgniter community](https://forum.tastyigniter.com) is welcoming to all, please review
+and abide by the [Code of Conduct](https://tastyigniter.com/docs/code-of-conduct).
 
-An event broadcast class should implement `Illuminate\Contracts\Broadcasting\ShouldBroadcast`.
+### Security Vulnerabilities
 
-```
-class BroadcastActivityCreated implements \Illuminate\Contracts\Broadcasting\ShouldBroadcast
-{
-    use Queueable, SerializesModels;
+Please review [our security policy](https://github.com/tastyigniter/ti-ext-broadcast/security/policy) on how to report
+security vulnerabilities.
 
-    /**
-     * The activity model instance.
-     *
-     * @var \Igniter\Flame\ActivityLog\Models\Activity
-     */
-    public $activity;
+### License
 
-    /**
-     * BroadcastActivityCreated constructor.
-     * @param $activity
-     */
-    public function __construct($activity)
-    {
-        $this->activity = $activity;
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return Channel|Channel[]
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('admin.user.'.$this->activity->user_id);
-    }
-}
-```
-
-For more information see [Defining Broadcast Events](https://laravel.com/docs/5.5/broadcasting#defining-broadcast-events)
-
-**Listening For Events on a User Authenticated Channel**
-```
-Broadcast.user()
-    .listen('eventName', (e) => {
-        console.log(e);
-    })
-```
-
-**Listening For Events on a Public Channel**
-```
-Broadcast.channel('channelName')
-    .listen('eventName', (e) => {
-        console.log(e);
-    })
-```
-
-**Use this PHP to manually dispatch a broadcast event:**
-
-```
-Event::dispatch(new BroadcastActivityCreated($activity));
-```
+TastyIgniter Broadcast extension is open-sourced software licensed under the [MIT license](LICENSE).
