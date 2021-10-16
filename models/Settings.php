@@ -17,7 +17,8 @@ class Settings extends Model
 
     public static function isConfigured()
     {
-        return strlen(self::get('app_id'))
+        return app()->hasDatabase()
+            AND strlen(self::get('app_id'))
             AND strlen(self::get('key'))
             AND strlen(self::get('secret'));
     }
@@ -44,5 +45,10 @@ class Settings extends Model
         }
 
         return $results;
+    }
+
+    public static function useWebsockets()
+    {
+        return (bool)self::get('use_websockets');
     }
 }

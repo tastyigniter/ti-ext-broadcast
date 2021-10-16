@@ -12,24 +12,15 @@ class Extension extends BaseExtension
 {
     public function register()
     {
+        $configPath = __DIR__.'/config/websockets.php';
+        $this->mergeConfigFrom($configPath, 'websockets');
+
         Manager::instance()->register($this->app);
     }
 
     public function boot()
     {
         Manager::instance()->boot($this->app);
-    }
-
-    /**
-     * Registers any front-end components implemented in this extension.
-     *
-     * @return array
-     */
-    public function registerComponents()
-    {
-        return [
-            'Igniter\Broadcast\Components\Broadcast' => 'broadcast',
-        ];
     }
 
     public function registerSettings()

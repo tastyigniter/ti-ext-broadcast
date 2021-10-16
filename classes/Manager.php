@@ -40,6 +40,8 @@ class Manager
 
     public function register(Application $app)
     {
+        $app->register(\Igniter\Broadcast\WebSocketsServiceProvider::class);
+
         $app->resolving(\Illuminate\Broadcasting\BroadcastManager::class, function () use ($app) {
             $app->config->set('broadcasting.default', 'pusher');
             $app->config->set('broadcasting.connections.pusher.key', Settings::get('key'));
@@ -47,6 +49,12 @@ class Manager
             $app->config->set('broadcasting.connections.pusher.app_id', Settings::get('app_id'));
             $app->config->set('broadcasting.connections.pusher.options.cluster', Settings::get('cluster'));
             $app->config->set('broadcasting.connections.pusher.options.encrypted', (bool)Settings::get('encrypted'));
+
+            if (Settings::useWebsockets()) {
+                $app->config->set('broadcasting.connections.pusher.options.host', Settings::get('host'));
+                $app->config->set('broadcasting.connections.pusher.options.port', Settings::get('port'));
+                $app->config->set('broadcasting.connections.pusher.options.scheme', Settings::get('scheme'));
+            }
         });
     }
 
@@ -95,15 +103,21 @@ class Manager
         if ($controller instanceof AdminController)
             $channelName = 'admin.user.'.(AdminAuth::isLogged() ? AdminAuth::getId() : 0);
 
-        Assets::putJsVars([
-            'broadcast' => [
-                'pusherKey' => Settings::get('key'),
-                'pusherCluster' => Settings::get('cluster'),
-                'pusherEncrypted' => Settings::get('encrypted'),
-                'pusherAuthUrl' => $controller->pageUrl('broadcasting/auth'),
-                'pusherUserChannel' => $channelName,
-            ],
-        ]);
+        $vars = [
+            'pusherKey' => config('broadcasting.connections.pusher.key'),
+            'pusherCluster' => config('broadcasting.connections.pusher.options.cluster'),
+            'pusherEncrypted' => config('broadcasting.connections.pusher.options.encrypted'),
+            'pusherAuthUrl' => $controller->pageUrl('broadcasting/auth'),
+            'pusherUserChannel' => $channelName,
+        ];
+
+        if (Settings::useWebsockets()) {
+            $vars['pusherWsHost'] = config('broadcasting.connections.pusher.options.host');
+            $vars['pusherWsPort'] = config('broadcasting.connections.pusher.options.port');
+            $vars['pusherWsScheme'] = config('broadcasting.connections.pusher.options.scheme');
+        }
+
+        Assets::putJsVars(['broadcast' => $vars]);
 
         $controller->addJs('$/igniter/broadcast/assets/js/vendor/pusher/pusher.min.js', 'pusher-js');
         $controller->addJs('$/igniter/broadcast/assets/js/vendor/echo/echo.iife.js', 'echo-js');
