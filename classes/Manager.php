@@ -60,7 +60,7 @@ class Manager
 
     public function boot(Application $app)
     {
-        if (!$app->hasDatabase() OR !Settings::isConfigured())
+        if (!$app->hasDatabase() || !Settings::isConfigured())
             return;
 
         self::bindBroadcasts(Settings::findEventBroadcasts());

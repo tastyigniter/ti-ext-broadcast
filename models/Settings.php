@@ -18,9 +18,9 @@ class Settings extends Model
     public static function isConfigured()
     {
         return app()->hasDatabase()
-            AND strlen(self::get('app_id'))
-            AND strlen(self::get('key'))
-            AND strlen(self::get('secret'));
+            && strlen(self::get('app_id'))
+            && strlen(self::get('key'))
+            && strlen(self::get('secret'));
     }
 
     public static function findRegisteredBroadcasts()
