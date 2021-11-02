@@ -87,9 +87,9 @@ return [
             ['cluster', 'lang:igniter.broadcast::default.label_cluster', 'required|string'],
             ['encrypted', 'lang:igniter.broadcast::default.label_encrypted', 'required|string'],
             ['use_websockets', 'lang:igniter.broadcast::default.label_use_websockets', 'required|boolean'],
-            ['host', 'lang:igniter.broadcast::default.label_host', 'required|string'],
-            ['port', 'lang:igniter.broadcast::default.label_port', 'required|integer'],
-            ['scheme', 'lang:igniter.broadcast::default.label_scheme', 'required|alpha'],
+            ['host', 'lang:igniter.broadcast::default.label_host', 'required_if:use_websockets,1|string'],
+            ['port', 'lang:igniter.broadcast::default.label_port', 'required_if:use_websockets,1|integer'],
+            ['scheme', 'lang:igniter.broadcast::default.label_scheme', 'required_if:use_websockets,1|alpha'],
         ],
     ],
 ];
