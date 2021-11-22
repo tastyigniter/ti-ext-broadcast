@@ -8,7 +8,7 @@
   ],
   "license": "MIT",
   "require": {
-    "pusher/pusher-php-server": "~4.0",
+    "pusher/pusher-php-server": "~5.0",
     "beyondcode/laravel-websockets": "~1.12"
   },
   "minimum-stability": "dev"
