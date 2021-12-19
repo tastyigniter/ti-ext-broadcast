@@ -1,15 +1,33 @@
 {
-  "name": "igniter/broadcast",
+  "name": "tastyigniter/ti-ext-broadcast",
   "type": "tastyigniter-extension",
+  "description": "Push browser notifications in real-time from your TastyIgniter application.",
   "keywords": [
     "tastyigniter",
     "broadcast",
     "notification"
   ],
   "license": "MIT",
+  "authors": [
+    {
+      "name": "SamPoyigi",
+      "email": "sam@sampoyigi.com"
+    }
+  ],
   "require": {
     "pusher/pusher-php-server": "~5.0",
     "beyondcode/laravel-websockets": "~1.12"
   },
-  "minimum-stability": "dev"
+  "extra": {
+    "tastyigniter-extension": {
+      "code": "igniter.broadcast",
+      "name": "Broadcast Events",
+      "icon": {
+        "class": "fa fa-bullhorn",
+        "backgroundColor": "#539EC1",
+        "color": "#fff"
+      },
+      "homepage": "https:\/\/tastyigniter.com\/marketplace\/item\/igniter-broadcast"
+    }
+  }
 }
