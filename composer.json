@@ -18,6 +18,9 @@
     "pusher/pusher-php-server": "~5.0",
     "beyondcode/laravel-websockets": "~1.12"
   },
+  "replace": {
+    "guzzlehttp/psr7": "~1.5"
+  },
   "extra": {
     "tastyigniter-extension": {
       "code": "igniter.broadcast",
