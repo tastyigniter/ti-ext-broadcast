@@ -80,22 +80,13 @@
     }
 
     if (window.app !== undefined && window.app.broadcast !== undefined) {
-        var options = {
+        Broadcast.Echo = new Echo({
             broadcaster: 'pusher',
             key: app.broadcast.pusherKey,
             cluster: app.broadcast.pusherCluster,
             authEndpoint: app.broadcast.pusherAuthUrl,
             encrypted: app.broadcast.pusherEncrypted,
-        }
-
-        if (app.broadcast.pusherWsHost) {
-            options.wsHost = app.broadcast.pusherWsHost;
-            options.wsPort = app.broadcast.pusherWsPort;
-            options.forceTLS = false;
-            options.disableStats = true;
-        }
-
-        Broadcast.Echo = new Echo(options);
+        });
     }
 
     $(document).ready(function () {

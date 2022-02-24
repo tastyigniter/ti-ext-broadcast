@@ -49,6 +49,6 @@ class Settings extends Model
 
     public static function useWebsockets()
     {
-        return (bool)self::get('use_websockets');
+        return FALSE;
     }
 }
