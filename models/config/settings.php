@@ -40,45 +40,6 @@ return [
                 'type' => 'switch',
                 'default' => TRUE,
             ],
-            'use_websockets' => [
-                'label' => 'lang:igniter.broadcast::default.label_use_websockets',
-                'span' => 'right',
-                'type' => 'switch',
-                'default' => FALSE,
-            ],
-            'host' => [
-                'label' => 'lang:igniter.broadcast::default.label_host',
-                'span' => 'left',
-                'type' => 'text',
-                'default' => '127.0.0.1',
-                'trigger' => [
-                    'action' => 'enable',
-                    'field' => 'use_websockets',
-                    'condition' => 'checked',
-                ],
-            ],
-            'port' => [
-                'label' => 'lang:igniter.broadcast::default.label_port',
-                'span' => 'right',
-                'type' => 'number',
-                'default' => 6001,
-                'trigger' => [
-                    'action' => 'enable',
-                    'field' => 'use_websockets',
-                    'condition' => 'checked',
-                ],
-            ],
-            'scheme' => [
-                'label' => 'lang:igniter.broadcast::default.label_scheme',
-                'span' => 'left',
-                'type' => 'text',
-                'default' => 'http',
-                'trigger' => [
-                    'action' => 'enable',
-                    'field' => 'use_websockets',
-                    'condition' => 'checked',
-                ],
-            ],
         ],
         'rules' => [
             ['app_id', 'lang:igniter.broadcast::default.label_app_id', 'required|integer'],
