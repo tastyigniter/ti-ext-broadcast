@@ -7,7 +7,7 @@ use System\Classes\ExtensionManager;
 
 class Settings extends Model
 {
-    public $implement = ['System\Actions\SettingsModel'];
+    public $implement = [\System\Actions\SettingsModel::class];
 
     // A unique code
     public $settingsCode = 'igniter_broadcast_settings';
