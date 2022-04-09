@@ -30,7 +30,7 @@ class Extension extends BaseExtension
                 'label' => 'Broadcast Events Settings',
                 'description' => 'Manage pusher api and cluster settings.',
                 'icon' => 'fa fa-bullhorn',
-                'model' => 'Igniter\Broadcast\Models\Settings',
+                'model' => \Igniter\Broadcast\Models\Settings::class,
             ],
         ];
     }
