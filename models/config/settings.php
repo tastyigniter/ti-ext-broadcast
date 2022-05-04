@@ -38,7 +38,7 @@ return [
                 'label' => 'lang:igniter.broadcast::default.label_encrypted',
                 'span' => 'left',
                 'type' => 'switch',
-                'default' => TRUE,
+                'default' => true,
             ],
         ],
         'rules' => [

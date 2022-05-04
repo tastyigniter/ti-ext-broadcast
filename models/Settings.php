@@ -49,6 +49,6 @@ class Settings extends Model
 
     public static function useWebsockets()
     {
-        return FALSE;
+        return false;
     }
 }

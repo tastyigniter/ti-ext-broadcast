@@ -29,8 +29,8 @@ return [
             'secret' => env('PUSHER_APP_SECRET'),
             'path' => env('PUSHER_APP_PATH'),
             'capacity' => null,
-            'enable_client_messages' => FALSE,
-            'enable_statistics' => TRUE,
+            'enable_client_messages' => false,
+            'enable_statistics' => true,
         ],
     ],
 
@@ -102,7 +102,7 @@ return [
          * Use an DNS resolver to make the requests to the statistics logger
          * default is to resolve everything to 127.0.0.1.
          */
-        'perform_dns_lookup' => FALSE,
+        'perform_dns_lookup' => false,
     ],
 
     /*
