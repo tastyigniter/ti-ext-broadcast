@@ -16,11 +16,11 @@
                 .on('broadcastNewActivity', Broadcast.pushNotification)
         },
 
-        channel: function(name) {
+        channel: function (name) {
             return Broadcast.Echo.channel(name)
         },
 
-        user: function() {
+        user: function () {
             return Broadcast.Echo.private(app.broadcast.pusherUserChannel)
         },
 
