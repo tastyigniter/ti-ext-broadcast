@@ -2,7 +2,7 @@
 
 namespace Igniter\Broadcast\Components;
 
-use System\Classes\BaseComponent;
+use Igniter\System\Classes\BaseComponent;
 
 class Broadcast extends BaseComponent
 {

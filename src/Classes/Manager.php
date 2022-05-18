@@ -2,16 +2,16 @@
 
 namespace Igniter\Broadcast\Classes;
 
-use Admin\Classes\AdminController;
-use Admin\Facades\AdminAuth;
+use Igniter\Admin\Classes\AdminController;
+use Igniter\Admin\Facades\AdminAuth;
 use Igniter\Broadcast\Models\Settings;
+use Igniter\Main\Classes\MainController;
+use Igniter\Main\Facades\Auth;
+use Igniter\System\Facades\Assets;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Event;
 use InvalidArgumentException;
-use Main\Classes\MainController;
-use Main\Facades\Auth;
-use System\Facades\Assets;
 
 class Manager
 {
@@ -87,7 +87,7 @@ class Manager
     }
 
     /**
-     * @param $controller \Admin\Classes\AdminController|\Main\Classes\MainController
+     * @param $controller \Igniter\Admin\Classes\AdminController|\Igniter\Main\Classes\MainController
      */
     protected function addAssetsToController($controller)
     {

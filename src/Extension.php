@@ -3,7 +3,7 @@
 namespace Igniter\Broadcast;
 
 use Igniter\Broadcast\Classes\Manager;
-use System\Classes\BaseExtension;
+use Igniter\System\Classes\BaseExtension;
 
 /**
  * Broadcast Extension Information File
@@ -12,6 +12,9 @@ class Extension extends BaseExtension
 {
     public function register()
     {
+        $configPath = __DIR__.'/../config/websockets.php';
+        $this->mergeConfigFrom($configPath, 'websockets');
+
         Manager::instance()->register($this->app);
     }
 
