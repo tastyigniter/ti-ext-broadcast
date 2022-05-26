@@ -3,6 +3,7 @@
 namespace Igniter\Broadcast\Models;
 
 use Igniter\Flame\Database\Model;
+use Igniter\Igniter;
 use Igniter\System\Classes\ExtensionManager;
 
 class Settings extends Model
@@ -17,7 +18,7 @@ class Settings extends Model
 
     public static function isConfigured()
     {
-        return app()->hasDatabase()
+        return Igniter::hasDatabase()
             && strlen(self::get('app_id'))
             && strlen(self::get('key'))
             && strlen(self::get('secret'));
