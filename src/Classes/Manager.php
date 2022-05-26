@@ -5,6 +5,7 @@ namespace Igniter\Broadcast\Classes;
 use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Facades\AdminAuth;
 use Igniter\Broadcast\Models\Settings;
+use Igniter\Igniter;
 use Igniter\Main\Classes\MainController;
 use Igniter\Main\Facades\Auth;
 use Igniter\System\Facades\Assets;
@@ -52,7 +53,7 @@ class Manager
 
     public function boot(Application $app)
     {
-        if (!$app->hasDatabase() || !Settings::isConfigured())
+        if (!Igniter::hasDatabase() || !Settings::isConfigured())
             return;
 
         self::bindBroadcasts(Settings::findEventBroadcasts());
