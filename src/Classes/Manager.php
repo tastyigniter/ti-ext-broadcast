@@ -5,7 +5,7 @@ namespace Igniter\Broadcast\Classes;
 use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Facades\AdminAuth;
 use Igniter\Broadcast\Models\Settings;
-use Igniter\Igniter;
+use Igniter\Flame\Igniter;
 use Igniter\Main\Classes\MainController;
 use Igniter\Main\Facades\Auth;
 use Igniter\System\Facades\Assets;
