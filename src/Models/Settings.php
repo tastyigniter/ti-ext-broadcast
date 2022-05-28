@@ -3,7 +3,7 @@
 namespace Igniter\Broadcast\Models;
 
 use Igniter\Flame\Database\Model;
-use Igniter\Igniter;
+use Igniter\Flame\Igniter;
 use Igniter\System\Classes\ExtensionManager;
 
 class Settings extends Model
@@ -27,7 +27,7 @@ class Settings extends Model
     public static function findRegisteredBroadcasts()
     {
         $results = [];
-        $broadcastBundle = ExtensionManager::instance()->getRegistrationMethodValues('registerEventBroadcasts');
+        $broadcastBundle = resolve(ExtensionManager::class)->getRegistrationMethodValues('registerEventBroadcasts');
 
         foreach ($broadcastBundle as $extension => $broadcasts) {
             foreach ($broadcasts as $event => $broadcast) {
