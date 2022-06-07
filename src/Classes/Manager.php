@@ -16,8 +16,6 @@ use InvalidArgumentException;
 
 class Manager
 {
-    use \Igniter\Flame\Traits\Singleton;
-
     /**
      * @param array $broadcasts
      */
@@ -35,11 +33,11 @@ class Manager
     public static function bindBroadcast($eventCode, $broadcastClass)
     {
         Event::listen($eventCode, function () use ($broadcastClass) {
-            self::instance()->dispatch($broadcastClass, func_get_args());
+            (new static)->dispatch($broadcastClass, func_get_args());
         });
     }
 
-    public function register(Application $app)
+    public static function register(Application $app)
     {
         $app->resolving(\Illuminate\Broadcasting\BroadcastManager::class, function () use ($app) {
             $app->config->set('broadcasting.default', 'pusher');
@@ -51,7 +49,7 @@ class Manager
         });
     }
 
-    public function boot(Application $app)
+    public static function boot(Application $app)
     {
         if (!Igniter::hasDatabase() || !Settings::isConfigured())
             return;
