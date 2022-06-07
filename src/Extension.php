@@ -15,12 +15,12 @@ class Extension extends BaseExtension
         $configPath = __DIR__.'/../config/websockets.php';
         $this->mergeConfigFrom($configPath, 'websockets');
 
-        Manager::instance()->register($this->app);
+        Manager::register($this->app);
     }
 
     public function boot()
     {
-        Manager::instance()->boot($this->app);
+        Manager::boot($this->app);
     }
 
     public function registerSettings()
