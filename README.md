@@ -26,4 +26,5 @@ security vulnerabilities.
 
 ### License
 
-TastyIgniter Broadcast extension is open-sourced software licensed under the [MIT license](LICENSE).
+TastyIgniter Broadcast extension is open-sourced software licensed under
+the [MIT license](https://github.com/tastyigniter/ti-ext-broadcast/LICENSE.md).
