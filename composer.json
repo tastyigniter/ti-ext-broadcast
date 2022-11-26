@@ -1,6 +1,6 @@
 {
   "name": "tastyigniter/ti-ext-broadcast",
-  "type": "tastyigniter-extension",
+  "type": "tastyigniter-package",
   "description": "Push browser notifications in real-time from your TastyIgniter application.",
   "keywords": [
     "tastyigniter",
