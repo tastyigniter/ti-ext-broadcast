@@ -17,31 +17,10 @@ for **Igniter.Broadcast** in **Admin System > Updates > Browse Extensions**
 
 ## Configuration
 
-You need to fill in your applicable Pusher credentials under
-`System > Settings > Broadcast Events settings`. Follow the instructions given below for each social network you would
-like to use.
-
-### Laravel Websockets configuration
-
-If you are new to Laravel Websockets, please check out
-the [Laravel Websockets documentation](https://github.com/beyondcode/laravel-websockets).
-
-Make sure you're using Pusher as your broadcasting driver. Setting the `BROADCAST DRIVER` environment variable in
-your.env file will accomplish this:
-
-```bash
-BROADCAST_DRIVER=pusher
-```
-
-From the TastyIgniter admin, enable Laravel Websockets and add the `host` and `port` configuration key
-under `System > Settings > Broadcast Events settings`. The Laravel WebSocket server's default port is 6001.
-
-Once you have configured your WebSockets settings, you can start the Laravel WebSocket server by issuing the artisan
-command:
-
-```bash
-php artisan websockets:serve
-```
+1. You need to fill in your applicable Pusher credentials under
+`System > Settings > Broadcast Events settings`. Follow the instructions to fill in your applicable Pusher credentials, you will need your Pusher Secret, Pusher App ID, and Pusher key.
+2. Install the Igniter.User extension as they are required for authenticating private and presence channels. This step is optional if you only want to use public channels.
+3. Add the Broadcast component included with this extension to a layout or page. The component injects the required js libraries into the page.
 
 ## Usage
 
