@@ -20,7 +20,6 @@ for **Igniter.Broadcast** in **Admin System > Updates > Browse Extensions**
 1. You need to fill in your applicable Pusher credentials under
 `System > Settings > Broadcast Events settings`. Follow the instructions to fill in your applicable Pusher credentials, you will need your Pusher Secret, Pusher App ID, and Pusher key.
 2. Install the Igniter.User extension as they are required for authenticating private and presence channels. This step is optional if you only want to use public channels.
-3. Add the Broadcast component included with this extension to a layout or page. The component injects the required js libraries into the page.
 
 ## Usage
 
