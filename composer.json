@@ -15,7 +15,7 @@
     }
   ],
   "require": {
-    "pusher/pusher-php-server": "~5.0"
+    "pusher/pusher-php-server": "~7.0"
   },
   "extra": {
     "tastyigniter-extension": {
