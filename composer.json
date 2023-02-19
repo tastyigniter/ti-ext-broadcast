@@ -15,7 +15,6 @@
     }
   ],
   "require": {
-    "tastyigniter/flame": "v4.x-dev",
     "pusher/pusher-php-server": "~7.0"
   },
   "autoload": {
