@@ -16,9 +16,6 @@ use InvalidArgumentException;
 
 class Manager
 {
-    /**
-     * @param array $broadcasts
-     */
     public static function bindBroadcasts(array $broadcasts)
     {
         foreach ($broadcasts as $eventCode => $broadcastClass) {
@@ -26,10 +23,6 @@ class Manager
         }
     }
 
-    /**
-     * @param $eventCode
-     * @param $broadcastClass
-     */
     public static function bindBroadcast($eventCode, $broadcastClass)
     {
         Event::listen($eventCode, function () use ($broadcastClass) {
@@ -51,8 +44,9 @@ class Manager
 
     public static function boot(Application $app)
     {
-        if (!Igniter::hasDatabase() || !Settings::isConfigured())
+        if (!Igniter::hasDatabase() || !Settings::isConfigured()) {
             return;
+        }
 
         self::bindBroadcasts(Settings::findEventBroadcasts());
 
@@ -79,8 +73,9 @@ class Manager
 
     public function dispatch($broadcastClass, $params)
     {
-        if (!class_exists($broadcastClass))
+        if (!class_exists($broadcastClass)) {
             throw new InvalidArgumentException("Event broadcast class '$broadcastClass' not found.");
+        }
 
         return Event::dispatch(new $broadcastClass(...$params));
     }
@@ -91,8 +86,9 @@ class Manager
     protected function addAssetsToController($controller)
     {
         $channelName = 'main.user.'.(Auth::isLogged() ? Auth::getId() : 0);
-        if ($controller instanceof AdminController)
+        if ($controller instanceof AdminController) {
             $channelName = 'admin.user.'.(AdminAuth::isLogged() ? AdminAuth::getId() : 0);
+        }
 
         Assets::putJsVars(['broadcast' => [
             'pusherKey' => config('broadcasting.connections.pusher.key'),

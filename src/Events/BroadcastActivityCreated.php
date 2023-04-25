@@ -21,7 +21,6 @@ class BroadcastActivityCreated implements ShouldBroadcast
 
     /**
      * BroadcastActivitySent constructor.
-     * @param $activity
      */
     public function __construct($activity)
     {
