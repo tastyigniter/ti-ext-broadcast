@@ -1,0 +1,161 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Foundation\\\\Application\\:\\:\\$config\\.$#"
+			count: 6
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Broadcast\\\\Models\\\\Settings\\:\\:get\\(\\)\\.$#"
+			count: 5
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to method bindEvent\\(\\) on an unknown class Igniter\\\\Admin\\\\Classes\\\\AdminController\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to method bindEvent\\(\\) on an unknown class Igniter\\\\Main\\\\Classes\\\\MainController\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to static method extend\\(\\) on an unknown class Igniter\\\\Admin\\\\Classes\\\\AdminController\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to static method extend\\(\\) on an unknown class Igniter\\\\Main\\\\Classes\\\\MainController\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to static method getId\\(\\) on an unknown class Igniter\\\\Admin\\\\Facades\\\\AdminAuth\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to static method getId\\(\\) on an unknown class Igniter\\\\Main\\\\Facades\\\\Auth\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to static method hasDatabase\\(\\) on an unknown class Igniter\\\\Flame\\\\Igniter\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to static method isLogged\\(\\) on an unknown class Igniter\\\\Admin\\\\Facades\\\\AdminAuth\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to static method isLogged\\(\\) on an unknown class Igniter\\\\Main\\\\Facades\\\\Auth\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to static method putJsVars\\(\\) on an unknown class Igniter\\\\System\\\\Facades\\\\Assets\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Class Igniter\\\\Admin\\\\Classes\\\\AdminController not found\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Parameter \\$controller of anonymous function has invalid type Igniter\\\\Admin\\\\Classes\\\\AdminController\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Parameter \\$controller of anonymous function has invalid type Igniter\\\\Main\\\\Classes\\\\MainController\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to an undefined method Igniter\\\\Broadcast\\\\Components\\\\Broadcast\\:\\:addJs\\(\\)\\.$#"
+			count: 1
+			path: src/Components/Broadcast.php
+
+		-
+			message: "#^Access to property \\$activity_id on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
+			count: 1
+			path: src/Events/BroadcastActivityCreated.php
+
+		-
+			message: "#^Access to property \\$message on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
+			count: 1
+			path: src/Events/BroadcastActivityCreated.php
+
+		-
+			message: "#^Access to property \\$title on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
+			count: 1
+			path: src/Events/BroadcastActivityCreated.php
+
+		-
+			message: "#^Access to property \\$type on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
+			count: 1
+			path: src/Events/BroadcastActivityCreated.php
+
+		-
+			message: "#^Access to property \\$url on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
+			count: 1
+			path: src/Events/BroadcastActivityCreated.php
+
+		-
+			message: "#^Access to property \\$user_id on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
+			count: 1
+			path: src/Events/BroadcastActivityCreated.php
+
+		-
+			message: "#^Access to property \\$user_type on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
+			count: 1
+			path: src/Events/BroadcastActivityCreated.php
+
+		-
+			message: "#^Call to method toArray\\(\\) on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
+			count: 1
+			path: src/Events/BroadcastActivityCreated.php
+
+		-
+			message: "#^Property Igniter\\\\Broadcast\\\\Events\\\\BroadcastActivityCreated\\:\\:\\$activity has unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity as its type\\.$#"
+			count: 1
+			path: src/Events/BroadcastActivityCreated.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Broadcast\\\\Extension\\:\\:\\$app\\.$#"
+			count: 2
+			path: src/Extension.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\Broadcast\\\\Models\\\\Settings\\:\\:get\\(\\)\\.$#"
+			count: 3
+			path: src/Models/Settings.php
+
+		-
+			message: "#^Call to static method hasDatabase\\(\\) on an unknown class Igniter\\\\Flame\\\\Igniter\\.$#"
+			count: 1
+			path: src/Models/Settings.php
+
+		-
+			message: "#^Class Igniter\\\\System\\\\Actions\\\\SettingsModel not found\\.$#"
+			count: 1
+			path: src/Models/Settings.php
+
+		-
+			message: "#^Class Igniter\\\\System\\\\Classes\\\\ExtensionManager not found\\.$#"
+			count: 1
+			path: src/Models/Settings.php
