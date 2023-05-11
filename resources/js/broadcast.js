@@ -10,6 +10,9 @@
             if (Broadcast.Echo === undefined)
                 return;
 
+            if (!app.broadcast.pusherUserChannel)
+                return;
+
             Broadcast.user().listen('.activityCreated', Broadcast.onActivityCreated)
 
             $(window).on('broadcastNewActivity', Broadcast.reloadActivityMenu)

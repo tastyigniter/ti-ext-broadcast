@@ -2,6 +2,7 @@
 
 namespace Igniter\Broadcast\Classes;
 
+use App\Providers\BroadcastServiceProvider;
 use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Facades\AdminAuth;
 use Igniter\Broadcast\Models\Settings;
@@ -26,7 +27,7 @@ class Manager
     public static function bindBroadcast($eventCode, $broadcastClass)
     {
         Event::listen($eventCode, function () use ($broadcastClass) {
-            (new static)->dispatch($broadcastClass, func_get_args());
+            self::dispatch($broadcastClass, func_get_args());
         });
     }
 
@@ -50,28 +51,32 @@ class Manager
 
         self::bindBroadcasts(Settings::findEventBroadcasts());
 
+        if (!$app->providerIsLoaded(BroadcastServiceProvider::class)) {
+            Broadcast::routes();
+        }
+
         Broadcast::channel('admin.user.{userId}', function ($user, $userId) {
             return (int)$user->user_id === (int)$userId;
-        });
+        }, ['guards' => ['web', 'igniter-admin']]);
 
         Broadcast::channel('main.user.{userId}', function ($user, $userId) {
             return (int)$user->customer_id === (int)$userId;
-        });
+        }, ['guards' => ['web', 'igniter-customer']]);
 
         AdminController::extend(function (AdminController $controller) {
             $controller->bindEvent('controller.beforeRemap', function () use ($controller) {
-                $this->addAssetsToController($controller);
+                self::addAssetsToController($controller);
             });
         });
 
         MainController::extend(function (MainController $controller) {
-            $controller->bindEvent('controller.afterConstructor', function ($controller) {
-                $this->addAssetsToController($controller);
+            $controller->bindEvent('controller.beforeRemap', function () use ($controller) {
+                self::addAssetsToController($controller);
             });
         });
     }
 
-    public function dispatch($broadcastClass, $params)
+    public static function dispatch($broadcastClass, $params)
     {
         if (!class_exists($broadcastClass)) {
             throw new InvalidArgumentException("Event broadcast class '$broadcastClass' not found.");
@@ -83,24 +88,26 @@ class Manager
     /**
      * @param $controller \Igniter\Admin\Classes\AdminController|\Igniter\Main\Classes\MainController
      */
-    protected function addAssetsToController($controller)
+    protected static function addAssetsToController($controller)
     {
-        $channelName = 'main.user.'.(Auth::isLogged() ? Auth::getId() : 0);
-        if ($controller instanceof AdminController) {
-            $channelName = 'admin.user.'.(AdminAuth::isLogged() ? AdminAuth::getId() : 0);
+        $channelName = null;
+        if ($controller instanceof AdminController && AdminAuth::isLogged()) {
+            $channelName = 'admin.user.'.AdminAuth::getId();
+        } elseif ($controller instanceof MainController && Auth::isLogged()) {
+            $channelName = 'main.user.'.Auth::getId();
         }
 
         Assets::putJsVars(['broadcast' => [
             'pusherKey' => config('broadcasting.connections.pusher.key'),
             'pusherCluster' => config('broadcasting.connections.pusher.options.cluster'),
             'pusherEncrypted' => config('broadcasting.connections.pusher.options.encrypted'),
-            'pusherAuthUrl' => $controller->pageUrl('broadcasting/auth'),
+            'pusherAuthUrl' => url('broadcasting/auth'),
             'pusherUserChannel' => $channelName,
         ]]);
 
-        $controller->addJs('$/igniter/broadcast/assets/js/vendor/pusher/pusher.min.js', 'pusher-js');
-        $controller->addJs('$/igniter/broadcast/assets/js/vendor/echo/echo.iife.js', 'echo-js');
-        $controller->addJs('$/igniter/broadcast/assets/js/vendor/push/push.min.js', 'push-js');
-        $controller->addJs('$/igniter/broadcast/assets/js/broadcast.js', 'broadcast-js');
+        $controller->addJs('igniter.broadcast::/js/vendor/pusher/pusher.min.js', 'pusher-js');
+        $controller->addJs('igniter.broadcast::/js/vendor/echo/echo.iife.js', 'echo-js');
+        $controller->addJs('igniter.broadcast::/js/vendor/push/push.min.js', 'push-js');
+        $controller->addJs('igniter.broadcast::/js/broadcast.js', 'broadcast-js');
     }
 }
