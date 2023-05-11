@@ -14,6 +14,9 @@
 		"broadcast",
 		"notification"
 	],
+	"require": {
+		"pusher/pusher-php-server": "~7.0"
+	},
 	"require-dev": {
 		"laravel/pint": "^1.2",
 		"nunomaduro/larastan": "^2.4.0",
@@ -56,8 +59,5 @@
 			"composer/installers": true
 		},
 		"sort-packages": true
-	},
-	"require": {
-		"pusher/pusher-php-server": "~7.0"
 	}
 }
