@@ -1,63 +1,64 @@
 {
-	"name": "tastyigniter/ti-ext-broadcast",
-	"type": "tastyigniter-package",
-	"description": "Push browser notifications in real-time from your TastyIgniter application.",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Sam Poyigi",
-			"email": "sam@sampoyigi.com"
-		}
-	],
-	"keywords": [
-		"tastyigniter",
-		"broadcast",
-		"notification"
-	],
-	"require": {
-		"pusher/pusher-php-server": "~7.0"
-	},
-	"require-dev": {
-		"laravel/pint": "^1.2",
-		"nunomaduro/larastan": "^2.4.0",
-		"orchestra/testbench": "^8.5",
-		"pestphp/pest-plugin-laravel": "^2.0",
-		"tastyigniter/core": "dev-master"
-	},
-	"autoload": {
-		"psr-4": {
-			"Igniter\\Broadcast\\": "src/"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Igniter\\Broadcast\\Tests\\": "tests/"
-		}
-	},
-	"extra": {
-		"tastyigniter-extension": {
-			"code": "igniter.broadcast",
-			"name": "Broadcast Events",
-			"icon": {
-				"class": "fa fa-bullhorn",
-				"backgroundColor": "#539EC1",
-				"color": "#fff"
-			},
-			"homepage": "https://tastyigniter.com/marketplace/item/igniter-broadcast"
-		}
-	},
-	"scripts": {
-		"test": "vendor/bin/pest",
-		"test-coverage": "vendor/bin/pest --coverage",
-		"format": "vendor/bin/pint",
-		"static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M"
-	},
-	"config": {
-		"allow-plugins": {
-			"pestphp/pest-plugin": true,
-			"php-http/discovery": true,
-			"composer/installers": true
-		},
-		"sort-packages": true
-	}
+    "name": "tastyigniter/ti-ext-broadcast",
+    "type": "tastyigniter-package",
+    "description": "Push browser notifications in real-time from your TastyIgniter application.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sam Poyigi",
+            "email": "sam@sampoyigi.com"
+        }
+    ],
+    "keywords": [
+        "tastyigniter",
+        "broadcast",
+        "notification"
+    ],
+    "require": {
+        "pusher/pusher-php-server": "~7.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.2",
+        "nunomaduro/larastan": "^2.4.0",
+        "orchestra/testbench": "^8.5",
+        "pestphp/pest-plugin-laravel": "^2.0",
+        "tastyigniter/core": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Igniter\\Broadcast\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Igniter\\Broadcast\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "tastyigniter-extension": {
+            "code": "igniter.broadcast",
+            "name": "Broadcast Events",
+            "icon": {
+                "class": "fa fa-bullhorn",
+                "backgroundColor": "#539EC1",
+                "color": "#fff"
+            },
+            "homepage": "https://tastyigniter.com/marketplace/item/igniter-broadcast"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint",
+        "static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true,
+            "composer/installers": true
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
 }
