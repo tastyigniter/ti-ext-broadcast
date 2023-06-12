@@ -4,12 +4,12 @@ namespace Igniter\Broadcast\Classes;
 
 use App\Providers\BroadcastServiceProvider;
 use Igniter\Admin\Classes\AdminController;
-use Igniter\Admin\Facades\AdminAuth;
 use Igniter\Broadcast\Models\Settings;
 use Igniter\Flame\Igniter;
 use Igniter\Main\Classes\MainController;
-use Igniter\Main\Facades\Auth;
 use Igniter\System\Facades\Assets;
+use Igniter\User\Facades\AdminAuth;
+use Igniter\User\Facades\Auth;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Event;
