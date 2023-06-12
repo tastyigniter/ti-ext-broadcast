@@ -6,12 +6,7 @@ parameters:
 			path: src/Classes/Manager.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Facades\\\\AdminAuth\\:\\:getId\\(\\)\\.$#"
-			count: 1
-			path: src/Classes/Manager.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Facades\\\\AdminAuth\\:\\:isLogged\\(\\)\\.$#"
+			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Foundation\\\\Application\\:\\:providerIsLoaded\\(\\)\\.$#"
 			count: 1
 			path: src/Classes/Manager.php
 
@@ -21,27 +16,32 @@ parameters:
 			path: src/Classes/Manager.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\Main\\\\Facades\\\\Auth\\:\\:getId\\(\\)\\.$#"
-			count: 1
-			path: src/Classes/Manager.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Main\\\\Facades\\\\Auth\\:\\:isLogged\\(\\)\\.$#"
-			count: 1
-			path: src/Classes/Manager.php
-
-		-
 			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:putJsVars\\(\\)\\.$#"
 			count: 1
 			path: src/Classes/Manager.php
 
 		-
-			message: "#^Undefined variable\\: \\$this$#"
-			count: 2
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\AdminAuth\\:\\:getId\\(\\)\\.$#"
+			count: 1
 			path: src/Classes/Manager.php
 
 		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\AdminAuth\\:\\:isLogged\\(\\)\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:isLogged\\(\\)\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Class App\\\\Providers\\\\BroadcastServiceProvider not found\\.$#"
 			count: 1
 			path: src/Classes/Manager.php
 
