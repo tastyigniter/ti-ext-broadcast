@@ -20,7 +20,7 @@ class Extension extends BaseExtension
         Manager::boot($this->app);
     }
 
-    public function registerSettings()
+    public function registerSettings(): array
     {
         return [
             'settings' => [
