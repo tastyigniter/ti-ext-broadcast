@@ -8,13 +8,13 @@ use Igniter\System\Classes\ExtensionManager;
 
 class Settings extends Model
 {
-    public $implement = [\Igniter\System\Actions\SettingsModel::class];
+    public array $implement = [\Igniter\System\Actions\SettingsModel::class];
 
     // A unique code
-    public $settingsCode = 'igniter_broadcast_settings';
+    public string $settingsCode = 'igniter_broadcast_settings';
 
     // Reference to field configuration
-    public $settingsFieldsConfig = 'settings';
+    public string $settingsFieldsConfig = 'settings';
 
     public static function isConfigured()
     {
