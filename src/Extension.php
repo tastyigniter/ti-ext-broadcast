@@ -35,7 +35,7 @@ class Extension extends BaseExtension
     public function registerEventBroadcasts()
     {
         return [
-            'activityLogger.logCreated' => \Igniter\Broadcast\Events\BroadcastActivityCreated::class,
+            \Illuminate\Notifications\Events\NotificationSent::class => \Igniter\Broadcast\Events\BroadcastActivityCreated::class,
         ];
     }
 }
