@@ -26,14 +26,14 @@ class Manager
 
     public static function bindBroadcast($eventCode, $broadcastClass)
     {
-        Event::listen($eventCode, function () use ($broadcastClass) {
+        Event::listen($eventCode, function() use ($broadcastClass) {
             self::dispatch($broadcastClass, func_get_args());
         });
     }
 
     public static function register(Application $app)
     {
-        $app->resolving(\Illuminate\Broadcasting\BroadcastManager::class, function () use ($app) {
+        $app->resolving(\Illuminate\Broadcasting\BroadcastManager::class, function() use ($app) {
             $app->config->set('broadcasting.default', 'pusher');
             $app->config->set('broadcasting.connections.pusher.key', Settings::get('key'));
             $app->config->set('broadcasting.connections.pusher.secret', Settings::get('secret'));
@@ -55,22 +55,22 @@ class Manager
             Broadcast::routes();
         }
 
-        Broadcast::channel('admin.user.{userId}', function ($user, $userId) {
+        Broadcast::channel('admin.user.{userId}', function($user, $userId) {
             return (int)$user->user_id === (int)$userId;
         }, ['guards' => ['web', 'igniter-admin']]);
 
-        Broadcast::channel('main.user.{userId}', function ($user, $userId) {
+        Broadcast::channel('main.user.{userId}', function($user, $userId) {
             return (int)$user->customer_id === (int)$userId;
         }, ['guards' => ['web', 'igniter-customer']]);
 
-        AdminController::extend(function (AdminController $controller) {
-            $controller->bindEvent('controller.beforeRemap', function () use ($controller) {
+        AdminController::extend(function(AdminController $controller) {
+            $controller->bindEvent('controller.beforeRemap', function() use ($controller) {
                 self::addAssetsToController($controller);
             });
         });
 
-        MainController::extend(function (MainController $controller) {
-            $controller->bindEvent('controller.beforeRemap', function () use ($controller) {
+        MainController::extend(function(MainController $controller) {
+            $controller->bindEvent('controller.beforeRemap', function() use ($controller) {
                 self::addAssetsToController($controller);
             });
         });
