@@ -16,7 +16,7 @@ By default, the extension registers the `/broadcasting/auth` route to handle aut
 
 ## Getting started
 
-1. Navigate to _Admin > System > Settings > Broadcast Events_ to configure the extension. You will need to enter your Pusher App ID, Pusher Key, and Pusher Secret.
+1. Navigate to _Admin > Manage > Settings > Broadcast Events_ to configure the extension. You will need to enter your Pusher App ID, Pusher Key, and Pusher Secret.
 2. You must configure and run a queue worker to process broadcast jobs. You can read more about this in the [Queue worker section of the TastyIgniter installation documentation](https://tastyigniter.com/docs/installation#setting-up-the-queue-deamon).
 
 ## Usage
