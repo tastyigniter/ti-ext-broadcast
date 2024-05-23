@@ -32,7 +32,7 @@ You can broadcast your custom events directly from your code, or you can broadca
 
 To broadcast an event, you need to define an event broadcast class that implements the `Illuminate\Contracts\Broadcasting\ShouldBroadcast` interface. The event broadcast class should define a `broadcastOn` method that returns the channels the event should be broadcast on.
 
-An event broadcast class is typically stored in the `src/Events` directory of your extension. 
+An event broadcast class is typically stored in the `src/Events` directory of your extension.
 
 ```php
 namespace Author\Extension\Events;
@@ -81,7 +81,7 @@ In this example, the `OrderStatusUpdated` event will be broadcast when the `igni
 
 ### Broadcasting events
 
-By default, TastyIgniter will automatically broadcast registered event classes when the associated system event is fired. However, you can also manually broadcast events using the event's `dispatch` method. 
+By default, TastyIgniter will automatically broadcast registered event classes when the associated system event is fired. However, you can also manually broadcast events using the event's `dispatch` method.
 
 ```php
 use Author\Extensions\Events\OrderStatusUpdated;
@@ -92,7 +92,6 @@ OrderStatusUpdated::dispatch($activity);
 ### Receiving broadcasts
 
 You can listen for events on user authenticated channels or public channels as follows:
-
 
 ```javascript
 // User Authenticated Channel
