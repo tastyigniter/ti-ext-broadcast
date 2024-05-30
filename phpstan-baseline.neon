@@ -12,16 +12,11 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Broadcast\\\\Models\\\\Settings\\:\\:get\\(\\)\\.$#"
-			count: 5
+			count: 6
 			path: src/Classes/Manager.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\System\\\\Facades\\\\Assets\\:\\:putJsVars\\(\\)\\.$#"
-			count: 1
-			path: src/Classes/Manager.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\AdminAuth\\:\\:getId\\(\\)\\.$#"
 			count: 1
 			path: src/Classes/Manager.php
 
@@ -31,7 +26,7 @@ parameters:
 			path: src/Classes/Manager.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:getId\\(\\)\\.$#"
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\AdminAuth\\:\\:user\\(\\)\\.$#"
 			count: 1
 			path: src/Classes/Manager.php
 
@@ -41,54 +36,14 @@ parameters:
 			path: src/Classes/Manager.php
 
 		-
-			message: "#^Class App\\\\Providers\\\\BroadcastServiceProvider not found\\.$#"
+			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:user\\(\\)\\.$#"
 			count: 1
 			path: src/Classes/Manager.php
 
 		-
-			message: "#^Access to property \\$activity_id on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
+			message: "#^Class App\\\\Providers\\\\BroadcastServiceProvider not found\\.$#"
 			count: 1
-			path: src/Events/BroadcastActivityCreated.php
-
-		-
-			message: "#^Access to property \\$message on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
-			count: 1
-			path: src/Events/BroadcastActivityCreated.php
-
-		-
-			message: "#^Access to property \\$title on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
-			count: 1
-			path: src/Events/BroadcastActivityCreated.php
-
-		-
-			message: "#^Access to property \\$type on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
-			count: 1
-			path: src/Events/BroadcastActivityCreated.php
-
-		-
-			message: "#^Access to property \\$url on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
-			count: 1
-			path: src/Events/BroadcastActivityCreated.php
-
-		-
-			message: "#^Access to property \\$user_id on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
-			count: 1
-			path: src/Events/BroadcastActivityCreated.php
-
-		-
-			message: "#^Access to property \\$user_type on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
-			count: 1
-			path: src/Events/BroadcastActivityCreated.php
-
-		-
-			message: "#^Call to method toArray\\(\\) on an unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity\\.$#"
-			count: 1
-			path: src/Events/BroadcastActivityCreated.php
-
-		-
-			message: "#^Property Igniter\\\\Broadcast\\\\Events\\\\BroadcastActivityCreated\\:\\:\\$activity has unknown class Igniter\\\\Flame\\\\ActivityLog\\\\Models\\\\Activity as its type\\.$#"
-			count: 1
-			path: src/Events/BroadcastActivityCreated.php
+			path: src/Classes/Manager.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Broadcast\\\\Models\\\\Settings\\:\\:get\\(\\)\\.$#"

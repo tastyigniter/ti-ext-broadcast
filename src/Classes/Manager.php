@@ -34,7 +34,7 @@ class Manager
     public static function register(Application $app)
     {
         $app->resolving(\Illuminate\Broadcasting\BroadcastManager::class, function() use ($app) {
-            $app->config->set('broadcasting.default', 'pusher');
+            $app->config->set('broadcasting.default', Settings::get('driver', 'pusher'));
             $app->config->set('broadcasting.connections.pusher.key', Settings::get('key'));
             $app->config->set('broadcasting.connections.pusher.secret', Settings::get('secret'));
             $app->config->set('broadcasting.connections.pusher.app_id', Settings::get('app_id'));
@@ -55,11 +55,11 @@ class Manager
             Broadcast::routes();
         }
 
-        Broadcast::channel('admin.user.{userId}', function($user, $userId) {
+        Broadcast::channel('admin.users.{userId}', function($user, $userId) {
             return (int)$user->user_id === (int)$userId;
         }, ['guards' => ['web', 'igniter-admin']]);
 
-        Broadcast::channel('main.user.{userId}', function($user, $userId) {
+        Broadcast::channel('main.users.{userId}', function($user, $userId) {
             return (int)$user->customer_id === (int)$userId;
         }, ['guards' => ['web', 'igniter-customer']]);
 
@@ -92,9 +92,9 @@ class Manager
     {
         $channelName = null;
         if ($controller instanceof AdminController && AdminAuth::isLogged()) {
-            $channelName = 'admin.user.'.AdminAuth::getId();
+            $channelName = AdminAuth::user()->receivesBroadcastNotificationsOn();
         } elseif ($controller instanceof MainController && Auth::isLogged()) {
-            $channelName = 'main.user.'.Auth::getId();
+            $channelName = Auth::user()->receivesBroadcastNotificationsOn();
         }
 
         Assets::putJsVars(['broadcast' => [

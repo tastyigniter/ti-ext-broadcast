@@ -24,7 +24,7 @@ class Extension extends BaseExtension
     {
         return [
             'settings' => [
-                'label' => 'Broadcast Events Settings',
+                'label' => 'Broadcast Settings',
                 'description' => 'Manage pusher api and cluster settings.',
                 'icon' => 'fa fa-bullhorn',
                 'model' => \Igniter\Broadcast\Models\Settings::class,
@@ -34,8 +34,6 @@ class Extension extends BaseExtension
 
     public function registerEventBroadcasts()
     {
-        return [
-            \Illuminate\Notifications\Events\NotificationSent::class => \Igniter\Broadcast\Events\BroadcastActivityCreated::class,
-        ];
+        return [];
     }
 }
