@@ -13,10 +13,11 @@
             if (!app.broadcast.pusherUserChannel)
                 return;
 
-            Broadcast.user().listen('.activityCreated', Broadcast.onActivityCreated)
+            $('[data-control="notification-list"]').on('click', '[data-bs-toggle="dropdown"]', function () {
+                Broadcast.checkNotificationPermission()
+            });
 
-            $(window).on('broadcastNewActivity', Broadcast.reloadActivityMenu)
-                .on('broadcastNewActivity', Broadcast.pushNotification)
+            Broadcast.user().notification(Broadcast.pushNotification)
         },
 
         channel: function (name) {
@@ -27,23 +28,7 @@
             return Broadcast.Echo.private(app.broadcast.pusherUserChannel)
         },
 
-        onActivityCreated: function (event) {
-            Broadcast.event = event
-
-            var _event = jQuery.Event('broadcastNewActivity')
-            $(window).trigger(_event, [event])
-        },
-
-        reloadActivityMenu: function () {
-            var $mainMenu = $('[data-control="mainmenu"]')
-
-            if ($mainMenu.length) {
-                $mainMenu.mainMenu('clearOptions', 'activity')
-                $mainMenu.mainMenu('updateBadgeCount', 'activity', 1)
-            }
-        },
-
-        pushNotification: function (e, event) {
+        pushNotification: function (notification) {
             var permissionLevel = Push.Permission.get()
 
             // Let's check if the browser supports notifications
@@ -52,30 +37,31 @@
             }
             // Let's check whether notification permissions have already been granted
             else if (permissionLevel === Push.Permission.GRANTED) {
-                // If it's okay let's create a notification
-                Broadcast.createNotification()
+                Broadcast.createNotification(notification)
             }
-            // Otherwise, we need to ask the user for permission
-            else if (permissionLevel !== Push.Permission.DENIED) {
+        },
+
+        checkNotificationPermission: function () {
+            var permissionLevel = Push.Permission.get()
+
+            if (permissionLevel !== Push.Permission.DENIED && permissionLevel !== Push.Permission.GRANTED) {
                 Push.Permission.request(Broadcast.permissionGranted, Broadcast.permissionDenied)
             }
         },
 
         permissionGranted: function (permission) {
-            Broadcast.createNotification()
         },
 
         permissionDenied: function (permission) {
-
         },
 
-        createNotification: function () {
-            Push.create(Broadcast.event.title, {
-                body: Broadcast.event.message,
+        createNotification: function (notification) {
+            Push.create(notification.title, {
+                body: notification.message,
                 timeout: 16000,
                 onClick: function () {
                     window.focus();
-                    window.location = Broadcast.event.url
+                    window.location = notification.url
                     this.close();
                 }
             });

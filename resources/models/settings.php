@@ -14,6 +14,15 @@ return [
             ],
         ],
         'fields' => [
+            'provider' => [
+                'label' => 'lang:igniter.broadcast::default.label_provider',
+                'type' => 'radiotoggle',
+                'default' => 'pusher',
+                'options' => [
+                    'pusher' => 'lang:igniter.broadcast::default.text_pusher',
+                    'ably' => 'lang:igniter.broadcast::default.text_ably',
+                ],
+            ],
             'app_id' => [
                 'label' => 'lang:igniter.broadcast::default.label_app_id',
                 'span' => 'left',
@@ -42,11 +51,12 @@ return [
             ],
         ],
         'rules' => [
+            ['provider', 'lang:igniter.broadcast::default.label_provider', 'required|string'],
             ['app_id', 'lang:igniter.broadcast::default.label_app_id', 'required|integer'],
             ['key', 'lang:igniter.broadcast::default.label_key', 'required|string'],
             ['secret', 'lang:igniter.broadcast::default.label_secret', 'required|string'],
             ['cluster', 'lang:igniter.broadcast::default.label_cluster', 'required|string'],
-            ['encrypted', 'lang:igniter.broadcast::default.label_encrypted', 'required|string'],
+            ['encrypted', 'lang:igniter.broadcast::default.label_encrypted', 'required|boolean'],
         ],
     ],
 ];
