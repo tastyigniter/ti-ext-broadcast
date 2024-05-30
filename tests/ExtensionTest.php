@@ -5,11 +5,11 @@ namespace Igniter\Automation\Tests;
 use Igniter\Broadcast\Models\Settings;
 use Illuminate\Broadcasting\BroadcastManager;
 
-beforeEach(function () {
+beforeEach(function() {
     Settings::clearInternalCache();
 });
 
-it('sets configuration values from settings model correctly', function () {
+it('sets configuration values from settings model correctly', function() {
     Settings::set('driver', 'pusher');
     Settings::set('app_id', '123');
     Settings::set('key', '123');
@@ -25,7 +25,7 @@ it('sets configuration values from settings model correctly', function () {
         ->and(Settings::get('encrypted'))->toEqual(config('broadcasting.connections.pusher.options.encrypted'));
 });
 
-it('returns true if the settings model is configured', function () {
+it('returns true if the settings model is configured', function() {
     expect(Settings::isConfigured())->toBeFalse();
 
     Settings::set('app_id', '123');
