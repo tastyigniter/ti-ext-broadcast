@@ -105,9 +105,8 @@ class Manager
             'pusherUserChannel' => $channelName,
         ]]);
 
-        $controller->addJs('igniter.broadcast::/js/vendor/pusher/pusher.min.js', 'pusher-js');
-        $controller->addJs('igniter.broadcast::/js/vendor/echo/echo.iife.js', 'echo-js');
-        $controller->addJs('igniter.broadcast::/js/vendor/push/push.min.js', 'push-js');
+        $controller->addJs('igniter.broadcast::/js/vendor.js', 'broadcast-vendor-js');
+        $controller->addJs('igniter.broadcast::/js/echo.js', 'broadcast-echo-js');
         $controller->addJs('igniter.broadcast::/js/broadcast.js', 'broadcast-js');
     }
 }

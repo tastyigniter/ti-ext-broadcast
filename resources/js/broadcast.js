@@ -68,8 +68,8 @@
         }
     }
 
-    if (window.app !== undefined && window.app.broadcast !== undefined) {
-        Broadcast.Echo = new Echo({
+    if (Broadcast.Echo === undefined && window.app !== undefined && window.app.broadcast !== undefined) {
+        window.Echo = Broadcast.Echo = new Echo({
             broadcaster: 'pusher',
             key: app.broadcast.pusherKey,
             cluster: app.broadcast.pusherCluster,
