@@ -91,5 +91,5 @@
 
     $(document).ready(function () {
         Broadcast.init()
-    })
-}(jQuery)
+    });
+}(jQuery);
