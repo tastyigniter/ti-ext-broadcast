@@ -79,6 +79,6 @@
     }
 
     $(document).ready(function () {
-        Broadcast.init()
+        Broadcast.init();
     })
-}(jQuery)
+}(jQuery);
