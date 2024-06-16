@@ -12,6 +12,8 @@ class Extension extends BaseExtension
 {
     public function register()
     {
+        parent::register();
+
         Manager::register($this->app);
     }
 
