@@ -34,11 +34,16 @@ class Manager
     public static function register(Application $app)
     {
         $app->resolving(\Illuminate\Broadcasting\BroadcastManager::class, function() use ($app) {
+            if (!Igniter::hasDatabase() || !Settings::isConfigured()) {
+                return;
+            }
+
             $app->config->set('broadcasting.default', Settings::get('driver', 'pusher'));
             $app->config->set('broadcasting.connections.pusher.key', Settings::get('key'));
             $app->config->set('broadcasting.connections.pusher.secret', Settings::get('secret'));
             $app->config->set('broadcasting.connections.pusher.app_id', Settings::get('app_id'));
-            $app->config->set('broadcasting.connections.pusher.options.cluster', Settings::get('cluster'));
+            $app->config->set('broadcasting.connections.pusher.options.cluster', $cluster = Settings::get('cluster'));
+            $app->config->set('broadcasting.connections.pusher.options.host', Settings::get('host') ?: 'api-'.$cluster.'.pusher.com');
             $app->config->set('broadcasting.connections.pusher.options.encrypted', (bool)Settings::get('encrypted'));
         });
     }
