@@ -2,7 +2,7 @@ parameters:
 	ignoreErrors:
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Foundation\\\\Application\\:\\:\\$config\\.$#"
-			count: 6
+			count: 7
 			path: src/Classes/Manager.php
 
 		-
@@ -12,7 +12,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Broadcast\\\\Models\\\\Settings\\:\\:get\\(\\)\\.$#"
-			count: 6
+			count: 7
 			path: src/Classes/Manager.php
 
 		-
@@ -37,11 +37,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\User\\\\Facades\\\\Auth\\:\\:user\\(\\)\\.$#"
-			count: 1
-			path: src/Classes/Manager.php
-
-		-
-			message: "#^Class App\\\\Providers\\\\BroadcastServiceProvider not found\\.$#"
 			count: 1
 			path: src/Classes/Manager.php
 
