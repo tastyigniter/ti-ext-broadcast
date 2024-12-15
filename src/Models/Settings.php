@@ -29,7 +29,7 @@ class Settings extends Model
         $results = [];
         $broadcastBundle = resolve(ExtensionManager::class)->getRegistrationMethodValues('registerEventBroadcasts');
 
-        foreach ($broadcastBundle as $extension => $broadcasts) {
+        foreach ($broadcastBundle as $broadcasts) {
             foreach ($broadcasts as $event => $broadcast) {
                 $results[$event] = $broadcast;
             }
