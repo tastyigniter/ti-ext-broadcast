@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Broadcast\Tests\Models;
 
 use Igniter\Broadcast\Models\Settings;
@@ -8,7 +10,7 @@ use Igniter\System\Actions\SettingsModel;
 use Igniter\System\Classes\ExtensionManager;
 use Mockery;
 
-it('finds registered broadcasts', function() {
+it('finds registered broadcasts', function(): void {
     $extensionManager = Mockery::mock(ExtensionManager::class);
     $extensionManager->shouldReceive('getRegistrationMethodValues')->with('registerEventBroadcasts')->andReturn([
         [
@@ -26,7 +28,7 @@ it('finds registered broadcasts', function() {
         ->and($broadcasts['event2'])->toEqual(TestBroadcastEvent::class);
 });
 
-it('finds event broadcasts', function() {
+it('finds event broadcasts', function(): void {
     $extensionManager = Mockery::mock(ExtensionManager::class);
     $extensionManager->shouldReceive('getRegistrationMethodValues')->with('registerEventBroadcasts')->andReturn([
         [
@@ -45,11 +47,11 @@ it('finds event broadcasts', function() {
         ->and($broadcasts['event2'])->toEqual(TestBroadcastEvent::class);
 });
 
-it('checks if websockets are enabled', function() {
+it('checks if websockets are enabled', function(): void {
     expect(Settings::useWebsockets())->toBeFalse();
 });
 
-it('configures settings model correctly', function() {
+it('configures settings model correctly', function(): void {
     $settings = new Settings;
 
     expect($settings->implement)->toContain(SettingsModel::class)

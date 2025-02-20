@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Broadcast;
 
 use Igniter\Broadcast\Classes\Manager;
+use Igniter\Broadcast\Models\Settings;
 use Igniter\System\Classes\BaseExtension;
 
 /**
@@ -10,14 +13,14 @@ use Igniter\System\Classes\BaseExtension;
  */
 class Extension extends BaseExtension
 {
-    public function register()
+    public function register(): void
     {
         parent::register();
 
         Manager::register($this->app);
     }
 
-    public function boot()
+    public function boot(): void
     {
         Manager::boot($this->app);
     }
@@ -29,12 +32,12 @@ class Extension extends BaseExtension
                 'label' => 'Broadcast Settings',
                 'description' => 'Manage pusher api and cluster settings.',
                 'icon' => 'fa fa-bullhorn',
-                'model' => \Igniter\Broadcast\Models\Settings::class,
+                'model' => Settings::class,
             ],
         ];
     }
 
-    public function registerEventBroadcasts()
+    public function registerEventBroadcasts(): array
     {
         return [];
     }

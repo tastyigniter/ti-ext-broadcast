@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Broadcast\Tests\Classes;
 
 use Igniter\Admin\Classes\AdminController;
@@ -26,10 +28,11 @@ function callProtectedMethod($class, string $methodName, array $args = []): mixe
     $reflection = new ReflectionClass($class);
     $method = $reflection->getMethod($methodName);
     $method->setAccessible(true);
+
     return $method->invokeArgs($class, $args);
 }
 
-it('binds broadcasts for given events', function() {
+it('binds broadcasts for given events', function(): void {
     Event::shouldReceive('listen')->twice();
 
     Manager::bindBroadcasts([
@@ -38,9 +41,10 @@ it('binds broadcasts for given events', function() {
     ]);
 });
 
-it('binds a single broadcast event', function() {
-    Event::shouldReceive('listen')->with('event1', Mockery::on(function($callback) {
+it('binds a single broadcast event', function(): void {
+    Event::shouldReceive('listen')->with('event1', Mockery::on(function($callback): true {
         $callback();
+
         return true;
     }))->once();
     Event::shouldReceive('dispatch')->once();
@@ -48,12 +52,13 @@ it('binds a single broadcast event', function() {
     Manager::bindBroadcast('event1', TestBroadcastEvent::class);
 });
 
-it('registers broadcast settings in application config', function() {
+it('registers broadcast settings in application config', function(): void {
     $app = Mockery::mock(Application::class);
     $app->config = Mockery::mock();
     $app->config->shouldReceive('set')->times(7);
-    $app->shouldReceive('resolving')->with(BroadcastManager::class, Mockery::on(function($callback) {
+    $app->shouldReceive('resolving')->with(BroadcastManager::class, Mockery::on(function($callback): true {
         $callback();
+
         return true;
     }))->once();
 
@@ -66,7 +71,7 @@ it('registers broadcast settings in application config', function() {
     Manager::register($app);
 });
 
-it('boots and binds broadcasts if configured', function() {
+it('boots and binds broadcasts if configured', function(): void {
     $app = Mockery::mock(Application::class);
     $app->shouldReceive('providerIsLoaded')->andReturn(false);
     Settings::set([
@@ -83,29 +88,31 @@ it('boots and binds broadcasts if configured', function() {
     app()->instance(ExtensionManager::class, $extensionManager);
 
     Broadcast::shouldReceive('routes')->once();
-    Broadcast::shouldReceive('channel')->with('admin.users.{userId}', Mockery::on(function($callback) {
+    Broadcast::shouldReceive('channel')->with('admin.users.{userId}', Mockery::on(function($callback): true {
         $user = Mockery::mock(User::class)->makePartial();
         $callback($user, 1);
+
         return true;
     }), ['guards' => ['web', 'igniter-admin']]);
-    Broadcast::shouldReceive('channel')->with('main.users.{userId}', Mockery::on(function($callback) {
+    Broadcast::shouldReceive('channel')->with('main.users.{userId}', Mockery::on(function($callback): true {
         $customer = Mockery::mock(Customer::class)->makePartial();
         $callback($customer, 1);
+
         return true;
     }), ['guards' => ['web', 'igniter-customer']]);
 
     Manager::boot($app);
 
-    AdminController::extend(function(AdminController $controller) {
+    AdminController::extend(function(AdminController $controller): void {
         $controller->fireEvent('controller.beforeRemap');
     });
 
-    MainController::extend(function(MainController $controller) {
+    MainController::extend(function(MainController $controller): void {
         $controller->fireEvent('controller.beforeRemap');
     });
 });
 
-it('does not boot if not configured', function() {
+it('does not boot if not configured', function(): void {
     Settings::clearInternalCache();
     $app = Mockery::mock(Application::class);
 
@@ -117,7 +124,7 @@ it('does not boot if not configured', function() {
     Manager::boot($app);
 });
 
-it('dispatches broadcast event', function() {
+it('dispatches broadcast event', function(): void {
     $broadcastClass = TestBroadcastEvent::class;
     $params = ['user' => null];
 
@@ -126,7 +133,7 @@ it('dispatches broadcast event', function() {
     Manager::dispatch($broadcastClass, $params);
 });
 
-it('throws exception if broadcast class does not exist', function() {
+it('throws exception if broadcast class does not exist', function(): void {
     $broadcastClass = 'NonExistentClass';
     $params = ['param1', 'param2'];
 
@@ -134,7 +141,7 @@ it('throws exception if broadcast class does not exist', function() {
         ->toThrow(InvalidArgumentException::class);
 });
 
-it('adds assets to admin controller', function() {
+it('adds assets to admin controller', function(): void {
     $controller = new AdminController;
     $user = Mockery::mock(User::class)->makePartial();
     $user->shouldReceive('receivesBroadcastNotificationsOn')->andReturn('channel');
@@ -147,7 +154,7 @@ it('adds assets to admin controller', function() {
     callProtectedMethod(new Manager, 'addAssetsToController', [$controller]);
 });
 
-it('adds assets to main controller', function() {
+it('adds assets to main controller', function(): void {
     $controller = new MainController;
     $customer = Mockery::mock(Customer::class)->makePartial();
     $customer->shouldReceive('receivesBroadcastNotificationsOn')->andReturn('channel');

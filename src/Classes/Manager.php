@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Broadcast\Classes;
 
 use Igniter\Admin\Classes\AdminController;
@@ -9,6 +11,7 @@ use Igniter\Main\Classes\MainController;
 use Igniter\System\Facades\Assets;
 use Igniter\User\Facades\AdminAuth;
 use Igniter\User\Facades\Auth;
+use Illuminate\Broadcasting\BroadcastManager;
 use Illuminate\Broadcasting\BroadcastServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Broadcast;
@@ -17,23 +20,23 @@ use InvalidArgumentException;
 
 class Manager
 {
-    public static function bindBroadcasts(array $broadcasts)
+    public static function bindBroadcasts(array $broadcasts): void
     {
         foreach ($broadcasts as $eventCode => $broadcastClass) {
             self::bindBroadcast($eventCode, $broadcastClass);
         }
     }
 
-    public static function bindBroadcast($eventCode, $broadcastClass)
+    public static function bindBroadcast($eventCode, $broadcastClass): void
     {
-        Event::listen($eventCode, function() use ($broadcastClass) {
+        Event::listen($eventCode, function() use ($broadcastClass): void {
             self::dispatch($broadcastClass);
         });
     }
 
-    public static function register(Application $app)
+    public static function register(Application $app): void
     {
-        $app->resolving(\Illuminate\Broadcasting\BroadcastManager::class, function() use ($app) {
+        $app->resolving(BroadcastManager::class, function() use ($app): void {
             if (Igniter::hasDatabase() && Settings::isConfigured()) {
                 $app->config->set('broadcasting.default', Settings::get('driver', 'pusher'));
                 $app->config->set('broadcasting.connections.pusher.key', Settings::get('key'));
@@ -46,7 +49,7 @@ class Manager
         });
     }
 
-    public static function boot(Application $app)
+    public static function boot(Application $app): void
     {
         if (!Igniter::hasDatabase() || !Settings::isConfigured()) {
             return;
@@ -58,22 +61,22 @@ class Manager
             Broadcast::routes();
         }
 
-        Broadcast::channel('admin.users.{userId}', function($user, $userId) {
+        Broadcast::channel('admin.users.{userId}', function($user, $userId): bool {
             return (int)$user->user_id === (int)$userId;
         }, ['guards' => ['web', 'igniter-admin']]);
 
-        Broadcast::channel('main.users.{userId}', function($user, $userId) {
+        Broadcast::channel('main.users.{userId}', function($user, $userId): bool {
             return (int)$user->customer_id === (int)$userId;
         }, ['guards' => ['web', 'igniter-customer']]);
 
-        AdminController::extend(function(AdminController $controller) {
-            $controller->bindEvent('controller.beforeRemap', function() use ($controller) {
+        AdminController::extend(function(AdminController $controller): void {
+            $controller->bindEvent('controller.beforeRemap', function() use ($controller): void {
                 self::addAssetsToController($controller);
             });
         });
 
-        MainController::extend(function(MainController $controller) {
-            $controller->bindEvent('controller.beforeRemap', function() use ($controller) {
+        MainController::extend(function(MainController $controller): void {
+            $controller->bindEvent('controller.beforeRemap', function() use ($controller): void {
                 self::addAssetsToController($controller);
             });
         });

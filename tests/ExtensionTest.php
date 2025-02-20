@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Automation\Tests;
 
 use Igniter\Broadcast\Extension;
@@ -8,11 +10,11 @@ use Illuminate\Broadcasting\BroadcastManager;
 use Illuminate\Contracts\Foundation\Application;
 use Mockery;
 
-beforeEach(function() {
+beforeEach(function(): void {
     Settings::clearInternalCache();
 });
 
-it('sets configuration values from settings model correctly', function() {
+it('sets configuration values from settings model correctly', function(): void {
     Settings::set('driver', 'pusher');
     Settings::set('app_id', '123');
     Settings::set('key', '123');
@@ -28,7 +30,7 @@ it('sets configuration values from settings model correctly', function() {
         ->and(Settings::get('encrypted'))->toEqual(config('broadcasting.connections.pusher.options.encrypted'));
 });
 
-it('returns true if the settings model is configured', function() {
+it('returns true if the settings model is configured', function(): void {
     expect(Settings::isConfigured())->toBeFalse();
 
     Settings::set('app_id', '123');
@@ -38,7 +40,7 @@ it('returns true if the settings model is configured', function() {
     expect(Settings::isConfigured())->toBeTrue();
 });
 
-it('returns correct settings array', function() {
+it('returns correct settings array', function(): void {
     $extension = new Extension(Mockery::mock(Application::class));
     $settings = $extension->registerSettings();
 
@@ -49,7 +51,7 @@ it('returns correct settings array', function() {
         ->and($settings['settings']['model'])->toBe(Settings::class);
 });
 
-it('returns empty array for event broadcasts', function() {
+it('returns empty array for event broadcasts', function(): void {
     $extension = new Extension(Mockery::mock(Application::class));
     $eventBroadcasts = $extension->registerEventBroadcasts();
 

@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Igniter\Broadcast\Models;
 
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Support\Facades\Igniter;
+use Igniter\System\Actions\SettingsModel;
 use Igniter\System\Classes\ExtensionManager;
 
 class Settings extends Model
 {
-    public array $implement = [\Igniter\System\Actions\SettingsModel::class];
+    public array $implement = [SettingsModel::class];
 
     // A unique code
     public string $settingsCode = 'igniter_broadcast_settings';
@@ -16,12 +19,12 @@ class Settings extends Model
     // Reference to field configuration
     public string $settingsFieldsConfig = 'settings';
 
-    public static function isConfigured()
+    public static function isConfigured(): bool
     {
         return Igniter::hasDatabase()
-            && strlen(self::get('app_id'))
-            && strlen(self::get('key'))
-            && strlen(self::get('secret'));
+            && strlen((string)self::get('app_id'))
+            && strlen((string)self::get('key'))
+            && strlen((string)self::get('secret'));
     }
 
     public static function findRegisteredBroadcasts()
@@ -48,7 +51,7 @@ class Settings extends Model
         return $results;
     }
 
-    public static function useWebsockets()
+    public static function useWebsockets(): bool
     {
         return false;
     }
