@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Igniter\Broadcast;
 
-use Override;
 use Igniter\Broadcast\Classes\Manager;
 use Igniter\Broadcast\Models\Settings;
 use Igniter\System\Classes\BaseExtension;
+use Override;
 
 /**
  * Broadcast Extension Information File
