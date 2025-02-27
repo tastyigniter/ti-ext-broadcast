@@ -9,6 +9,11 @@ use Igniter\Flame\Support\Facades\Igniter;
 use Igniter\System\Actions\SettingsModel;
 use Igniter\System\Classes\ExtensionManager;
 
+/**
+ * @method static mixed get(string $key, mixed $default = null)
+ * @method static bool set(string|array $key, mixed $value)
+ * @mixin SettingsModel
+ */
 class Settings extends Model
 {
     public array $implement = [SettingsModel::class];

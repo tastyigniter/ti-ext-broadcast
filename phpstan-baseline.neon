@@ -9,13 +9,3 @@ parameters:
 			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Foundation\\\\Application\\:\\:providerIsLoaded\\(\\)\\.$#"
 			count: 1
 			path: src/Classes/Manager.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Broadcast\\\\Models\\\\Settings\\:\\:get\\(\\)\\.$#"
-			count: 7
-			path: src/Classes/Manager.php
-
-		-
-			message: "#^Call to an undefined static method Igniter\\\\Broadcast\\\\Models\\\\Settings\\:\\:get\\(\\)\\.$#"
-			count: 3
-			path: src/Models/Settings.php

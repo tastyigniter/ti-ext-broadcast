@@ -61,13 +61,15 @@ class Manager
             Broadcast::routes();
         }
 
-        Broadcast::channel('admin.users.{userId}', function($user, $userId): bool {
-            return (int)$user->user_id === (int)$userId;
-        }, ['guards' => ['web', 'igniter-admin']]);
+        Broadcast::channel(
+            'admin.users.{userId}',
+            fn($user, $userId): bool => (int)$user->user_id === (int)$userId, ['guards' => ['web', 'igniter-admin']],
+        );
 
-        Broadcast::channel('main.users.{userId}', function($user, $userId): bool {
-            return (int)$user->customer_id === (int)$userId;
-        }, ['guards' => ['web', 'igniter-customer']]);
+        Broadcast::channel(
+            'main.users.{userId}',
+            fn($user, $userId): bool => (int)$user->customer_id === (int)$userId, ['guards' => ['web', 'igniter-customer']],
+        );
 
         AdminController::extend(function(AdminController $controller): void {
             $controller->bindEvent('controller.beforeRemap', function() use ($controller): void {
@@ -85,7 +87,7 @@ class Manager
     public static function dispatch($broadcastClass, $params = [])
     {
         if (!class_exists($broadcastClass)) {
-            throw new InvalidArgumentException("Event broadcast class '$broadcastClass' not found.");
+            throw new InvalidArgumentException(sprintf("Event broadcast class '%s' not found.", $broadcastClass));
         }
 
         return Event::dispatch(new $broadcastClass(...$params));

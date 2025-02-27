@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Igniter\Broadcast\Tests;
 
+use Override;
 use Igniter\Flame\Database\Model;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Bus\Queueable;
@@ -12,12 +13,13 @@ use Illuminate\Queue\SerializesModels;
 
 class TestBroadcastEvent implements ShouldBroadcast
 {
-    use Queueable, SerializesModels;
-
+    use Queueable;
+    use SerializesModels;
     public function __construct(
         public ?Model $user = null,
     ) {}
 
+    #[Override]
     public function broadcastOn(): array
     {
         return [

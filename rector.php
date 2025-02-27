@@ -8,13 +8,20 @@ use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 
 return RectorConfig::configure()
     ->withImportNames(removeUnusedImports: true)
-    ->withPaths([__DIR__.'/src', __DIR__.'/tests'])
+    ->withPaths([
+        __DIR__.'/src',
+        __DIR__.'/tests',
+    ])
     ->withRules([
         DeclareStrictTypesRector::class,
     ])
     ->withSkip([
         ReturnTypeFromStrictNewArrayRector::class,
     ])
-    ->withTypeCoverageLevel(100)
-    ->withDeadCodeLevel(100)
-    ->withCodeQualityLevel(100);
+    ->withPhpSets(php83: true)
+    ->withPreparedSets(
+        deadCode: true,
+        codeQuality: true,
+        codingStyle: true,
+        typeDeclarations: true,
+    );
