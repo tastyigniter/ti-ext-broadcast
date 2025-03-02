@@ -15,7 +15,7 @@
     "notification"
   ],
   "require": {
-    "tastyigniter/core": "^v4.0@beta || ^v4.0@dev",
+    "tastyigniter/core": "^4.0",
     "pusher/pusher-php-server": "~7.0",
     "ably/ably-php": "~1.0"
   },
@@ -68,6 +68,5 @@
       "composer/installers": true
     },
     "sort-packages": true
-  },
-  "minimum-stability": "dev"
+  }
 }
