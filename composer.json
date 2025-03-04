@@ -1,12 +1,7 @@
 {
   "name": "tastyigniter/ti-ext-broadcast",
-  "type": "tastyigniter-extension",
+  "type": "tastyigniter-package",
   "description": "Push browser notifications in real-time from your TastyIgniter application.",
-  "keywords": [
-    "tastyigniter",
-    "broadcast",
-    "notification"
-  ],
   "license": "MIT",
   "authors": [
     {
@@ -14,8 +9,32 @@
       "email": "sam@sampoyigi.com"
     }
   ],
+  "keywords": [
+    "tastyigniter",
+    "broadcast",
+    "notification"
+  ],
   "require": {
-    "pusher/pusher-php-server": "~7.0"
+    "tastyigniter/core": "^4.0",
+    "pusher/pusher-php-server": "~7.0",
+    "ably/ably-php": "~1.0"
+  },
+  "require-dev": {
+    "larastan/larastan": "^2.4",
+    "laravel/pint": "^1.2",
+    "pestphp/pest-plugin-laravel": "^3.0",
+    "rector/rector": "^1.2",
+    "sampoyigi/testbench": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Igniter\\Broadcast\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Igniter\\Broadcast\\Tests\\": "tests/"
+    }
   },
   "extra": {
     "tastyigniter-extension": {
@@ -26,7 +45,28 @@
         "backgroundColor": "#539EC1",
         "color": "#fff"
       },
-      "homepage": "https:\/\/tastyigniter.com\/marketplace\/item\/igniter-broadcast"
+      "homepage": "https://tastyigniter.com/marketplace/item/igniter-broadcast"
     }
+  },
+  "scripts": {
+    "test": "vendor/bin/pest",
+    "test-coverage": "vendor/bin/pest --coverage --exactly=100 --compact",
+    "type-coverage": "vendor/bin/pest --type-coverage --min=100",
+    "format": "vendor/bin/pint",
+    "refactor": "vendor/bin/rector process --dry-run",
+    "static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M",
+    "test-suite": [
+      "@refactor",
+      "@static",
+      "@test-coverage"
+    ]
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true,
+      "php-http/discovery": true,
+      "composer/installers": true
+    },
+    "sort-packages": true
   }
 }
