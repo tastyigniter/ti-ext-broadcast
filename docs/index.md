@@ -1,3 +1,9 @@
+---
+title: "Broadcast"
+section: "extensions"
+sortOrder: 30
+---
+
 ## Installation
 
 You can install the extension via composer using the following command:
