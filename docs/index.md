@@ -9,7 +9,7 @@ sortOrder: 30
 You can install the extension via composer using the following command:
 
 ```bash
-composer require tastyigniter/ti-ext-broadcast:"^4.0" -W
+composer require tastyigniter/ti-ext-broadcast -W
 ```
 
 By default, the extension registers the `/broadcasting/auth` route to handle authorization requests
