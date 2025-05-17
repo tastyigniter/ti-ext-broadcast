@@ -35,7 +35,7 @@ function callProtectedMethod($class, string $methodName, array $args = []): mixe
 it('binds broadcasts for given events', function(): void {
     Event::shouldReceive('listen')->twice();
 
-    Manager::bindBroadcasts([
+    resolve(Manager::class)->bindBroadcasts([
         'event1' => 'BroadcastClass1',
         'event2' => 'BroadcastClass2',
     ]);
@@ -49,13 +49,11 @@ it('binds a single broadcast event', function(): void {
     }))->once();
     Event::shouldReceive('dispatch')->once();
 
-    Manager::bindBroadcast('event1', TestBroadcastEvent::class);
+    resolve(Manager::class)->bindBroadcast('event1', TestBroadcastEvent::class);
 });
 
 it('registers broadcast settings in application config', function(): void {
     $app = Mockery::mock(Application::class);
-    $app->config = Mockery::mock();
-    $app->config->shouldReceive('set')->times(7);
     $app->shouldReceive('resolving')->with(BroadcastManager::class, Mockery::on(function($callback): true {
         $callback();
 
@@ -63,12 +61,34 @@ it('registers broadcast settings in application config', function(): void {
     }))->once();
 
     Settings::set([
+        'provider' => 'reverb',
         'secret' => 'secret',
         'app_id' => '123',
         'key' => '123',
+        'encrypted' => '1',
+        'reverb_host' => '0.0.0.0',
+        'reverb_port' => '123',
+        'reverb_scheme' => 'https',
+        'reverb_app_id' => '123',
+        'reverb_key' => '123',
+        'reverb_secret' => 'secret',
     ]);
 
-    Manager::register($app);
+    resolve(Manager::class)->register($app);
+
+    expect(config('broadcasting.default'))->toEqual('reverb')
+        ->and(config('broadcasting.connections.pusher.key'))->toEqual('123')
+        ->and(config('broadcasting.connections.pusher.secret'))->toEqual('secret')
+        ->and(config('broadcasting.connections.pusher.app_id'))->toEqual('123')
+        ->and(config('broadcasting.connections.pusher.options.cluster'))->toEqual(null)
+        ->and(config('broadcasting.connections.pusher.options.useTLS'))->toBeTrue()
+        ->and(config('broadcasting.connections.reverb.key'))->toEqual('123')
+        ->and(config('broadcasting.connections.reverb.secret'))->toEqual('secret')
+        ->and(config('broadcasting.connections.reverb.app_id'))->toEqual('123')
+        ->and(config('broadcasting.connections.reverb.options.host'))->toEqual('0.0.0.0')
+        ->and(config('broadcasting.connections.reverb.options.port'))->toEqual(123)
+        ->and(config('broadcasting.connections.reverb.options.scheme'))->toEqual('https')
+        ->and(config('broadcasting.connections.reverb.options.useTLS'))->toBeTrue();
 });
 
 it('boots and binds broadcasts if configured', function(): void {
@@ -101,7 +121,7 @@ it('boots and binds broadcasts if configured', function(): void {
         return true;
     }), ['guards' => ['web', 'igniter-customer']]);
 
-    Manager::boot($app);
+    resolve(Manager::class)->boot($app);
 
     AdminController::extend(function(AdminController $controller): void {
         $controller->fireEvent('controller.beforeRemap');
@@ -121,7 +141,7 @@ it('does not boot if not configured', function(): void {
     Broadcast::shouldReceive('routes')->never();
     Broadcast::shouldReceive('channel')->never();
 
-    Manager::boot($app);
+    resolve(Manager::class)->boot($app);
 });
 
 it('dispatches broadcast event', function(): void {
@@ -130,14 +150,14 @@ it('dispatches broadcast event', function(): void {
 
     Event::shouldReceive('dispatch')->once()->with(Mockery::type($broadcastClass));
 
-    Manager::dispatch($broadcastClass, $params);
+    resolve(Manager::class)->dispatch($broadcastClass, $params);
 });
 
 it('throws exception if broadcast class does not exist', function(): void {
     $broadcastClass = 'NonExistentClass';
     $params = ['param1', 'param2'];
 
-    expect(fn() => Manager::dispatch($broadcastClass, $params))
+    expect(fn() => resolve(Manager::class)->dispatch($broadcastClass, $params))
         ->toThrow(InvalidArgumentException::class);
 });
 
@@ -149,7 +169,7 @@ it('adds assets to admin controller', function(): void {
     AdminAuth::shouldReceive('user')->andReturn($user);
 
     Assets::shouldReceive('putJsVars')->once();
-    Assets::shouldReceive('addJs')->times(3);
+    Assets::shouldReceive('addJs')->times(2);
 
     callProtectedMethod(new Manager, 'addAssetsToController', [$controller]);
 });
@@ -162,7 +182,7 @@ it('adds assets to main controller', function(): void {
     Auth::shouldReceive('user')->andReturn($customer);
 
     Assets::shouldReceive('putJsVars')->once();
-    Assets::shouldReceive('addJs')->times(3);
+    Assets::shouldReceive('addJs')->times(2);
 
     callProtectedMethod(new Manager, 'addAssetsToController', [$controller]);
 });

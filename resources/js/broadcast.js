@@ -2,13 +2,13 @@
     "use strict"
 
     window.Broadcast = {
-        Echo: undefined,
-
         event: undefined,
 
         init: function () {
-            if (Broadcast.Echo === undefined)
+            if (window.Echo === undefined) {
+                console.error('Broadcast.Echo is undefined, configure the broadcast settings from the admin panel.');
                 return;
+            }
 
             if (!app.broadcast.pusherUserChannel)
                 return;
@@ -21,61 +21,60 @@
         },
 
         channel: function (name) {
-            return Broadcast.Echo.channel(name)
+            return window.Echo.channel(name)
         },
 
         user: function () {
-            return Broadcast.Echo.private(app.broadcast.pusherUserChannel)
+            return window.Echo.private(app.broadcast.pusherUserChannel)
         },
 
         pushNotification: function (notification) {
-            var permissionLevel = Push.Permission.get()
-
             // Let's check if the browser supports notifications
-            if (!("Notification" in window)) {
-                throw new Error("This browser does not support desktop notification");
+            if (!('Notification' in window)) {
+                console.error('This browser does not support notifications.');
+                return;
             }
+
             // Let's check whether notification permissions have already been granted
-            else if (permissionLevel === Push.Permission.GRANTED) {
+            if (Notification.permission === 'granted') {
                 Broadcast.createNotification(notification)
+            } else if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        Broadcast.createNotification(notification)
+                    }
+                });
             }
         },
 
         checkNotificationPermission: function () {
-            var permissionLevel = Push.Permission.get()
-
-            if (permissionLevel !== Push.Permission.DENIED && permissionLevel !== Push.Permission.GRANTED) {
-                Push.Permission.request(Broadcast.permissionGranted, Broadcast.permissionDenied)
+            if (!('Notification' in window)) {
+                console.error('This browser does not support notifications.');
+                return;
             }
+
+            Notification.requestPermission()
+                .then(Broadcast.permissionGranted)
+                .catch(Broadcast.permissionDenied);
         },
 
         permissionGranted: function (permission) {
         },
 
-        permissionDenied: function (permission) {
+        permissionDenied: function (error) {
         },
 
         createNotification: function (notification) {
-            Push.create(notification.title, {
+            const notificationObject = new Notification(notification.title, {
                 body: notification.message,
-                timeout: 16000,
-                onClick: function () {
-                    window.focus();
-                    window.location = notification.url
-                    this.close();
-                }
             });
-        }
-    }
 
-    if (Broadcast.Echo === undefined && window.app !== undefined && window.app.broadcast !== undefined) {
-        window.Echo = Broadcast.Echo = new Echo({
-            broadcaster: 'pusher',
-            key: app.broadcast.pusherKey,
-            cluster: app.broadcast.pusherCluster,
-            authEndpoint: app.broadcast.pusherAuthUrl,
-            encrypted: app.broadcast.pusherEncrypted,
-        });
+            notificationObject.onclick = function (event) {
+                event.preventDefault(); // prevent the browser from focusing the Notification's tab
+                window.focus();
+                window.location = notification.url
+            }
+        }
     }
 
     $(document).ready(function () {

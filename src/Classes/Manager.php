@@ -20,42 +20,36 @@ use InvalidArgumentException;
 
 class Manager
 {
-    public static function bindBroadcasts(array $broadcasts): void
+    public function bindBroadcasts(array $broadcasts): void
     {
         foreach ($broadcasts as $eventCode => $broadcastClass) {
-            self::bindBroadcast($eventCode, $broadcastClass);
+            $this->bindBroadcast($eventCode, $broadcastClass);
         }
     }
 
-    public static function bindBroadcast($eventCode, $broadcastClass): void
+    public function bindBroadcast($eventCode, $broadcastClass): void
     {
         Event::listen($eventCode, function() use ($broadcastClass): void {
-            self::dispatch($broadcastClass);
+            $this->dispatch($broadcastClass);
         });
     }
 
-    public static function register(Application $app): void
+    public function register(Application $app): void
     {
-        $app->resolving(BroadcastManager::class, function() use ($app): void {
+        $app->resolving(BroadcastManager::class, function(): void {
             if (Igniter::hasDatabase() && Settings::isConfigured()) {
-                $app->config->set('broadcasting.default', Settings::get('driver', 'pusher'));
-                $app->config->set('broadcasting.connections.pusher.key', Settings::get('key'));
-                $app->config->set('broadcasting.connections.pusher.secret', Settings::get('secret'));
-                $app->config->set('broadcasting.connections.pusher.app_id', Settings::get('app_id'));
-                $app->config->set('broadcasting.connections.pusher.options.cluster', $cluster = Settings::get('cluster'));
-                $app->config->set('broadcasting.connections.pusher.options.host', Settings::get('host') ?: 'api-'.$cluster.'.pusher.com');
-                $app->config->set('broadcasting.connections.pusher.options.encrypted', (bool)Settings::get('encrypted'));
+                $this->applyConnectionsConfigValues();
             }
         });
     }
 
-    public static function boot(Application $app): void
+    public function boot(Application $app): void
     {
         if (!Igniter::hasDatabase() || !Settings::isConfigured()) {
             return;
         }
 
-        self::bindBroadcasts(Settings::findEventBroadcasts());
+        $this->bindBroadcasts(Settings::findEventBroadcasts());
 
         if (!$app->providerIsLoaded(BroadcastServiceProvider::class)) {
             Broadcast::routes();
@@ -73,18 +67,18 @@ class Manager
 
         AdminController::extend(function(AdminController $controller): void {
             $controller->bindEvent('controller.beforeRemap', function() use ($controller): void {
-                self::addAssetsToController($controller);
+                $this->addAssetsToController($controller);
             });
         });
 
         MainController::extend(function(MainController $controller): void {
             $controller->bindEvent('controller.beforeRemap', function() use ($controller): void {
-                self::addAssetsToController($controller);
+                $this->addAssetsToController($controller);
             });
         });
     }
 
-    public static function dispatch($broadcastClass, $params = [])
+    public function dispatch($broadcastClass, $params = [])
     {
         if (!class_exists($broadcastClass)) {
             throw new InvalidArgumentException(sprintf("Event broadcast class '%s' not found.", $broadcastClass));
@@ -96,7 +90,7 @@ class Manager
     /**
      * @param $controller \Igniter\Admin\Classes\AdminController|\Igniter\Main\Classes\MainController
      */
-    protected static function addAssetsToController($controller)
+    protected function addAssetsToController($controller)
     {
         $channelName = null;
         if ($controller instanceof AdminController && AdminAuth::isLogged()) {
@@ -106,15 +100,48 @@ class Manager
         }
 
         Assets::putJsVars(['broadcast' => [
+            'driver' => config('broadcasting.default'),
             'pusherKey' => config('broadcasting.connections.pusher.key'),
             'pusherCluster' => config('broadcasting.connections.pusher.options.cluster'),
             'pusherEncrypted' => config('broadcasting.connections.pusher.options.encrypted'),
             'pusherAuthUrl' => url('broadcasting/auth'),
             'pusherUserChannel' => $channelName,
+            'reverbKey' => config('broadcasting.connections.reverb.key'),
+            'reverbHost' => config('broadcasting.connections.reverb.options.host'),
+            'reverbPort' => config('broadcasting.connections.reverb.options.port'),
+            'reverbForceTLS' => config('broadcasting.connections.reverb.options.useTLS'),
         ]]);
 
         $controller->addJs('igniter.broadcast::/js/vendor.js', 'broadcast-vendor-js');
-        $controller->addJs('igniter.broadcast::/js/echo.js', 'broadcast-echo-js');
         $controller->addJs('igniter.broadcast::/js/broadcast.js', 'broadcast-js');
+    }
+
+    protected function applyConnectionsConfigValues(): void
+    {
+        config()->set('broadcasting.default', Settings::get('provider', 'pusher'));
+
+        $pusherConfig = config('broadcasting.connections.pusher');
+        config()->set('broadcasting.connections.pusher', array_merge($pusherConfig, array_filter([
+            'app_id' => Settings::get('app_id'),
+            'key' => Settings::get('key'),
+            'secret' => Settings::get('secret'),
+            'options' => [
+                'cluster' => Settings::get('cluster'),
+                'useTLS' => (bool)Settings::get('encrypted'),
+            ],
+        ])));
+
+        $reverbConfig = config('broadcasting.connections.reverb');
+        config()->set('broadcasting.connections.reverb', array_merge($reverbConfig, array_filter([
+            'app_id' => Settings::get('reverb_app_id'),
+            'key' => Settings::get('reverb_key'),
+            'secret' => Settings::get('reverb_secret'),
+            'options' => [
+                'host' => Settings::get('reverb_host', 'localhost'),
+                'port' => Settings::get('reverb_port', 443),
+                'scheme' => Settings::get('reverb_scheme', 'https'),
+                'useTLS' => Settings::get('reverb_scheme') === 'https',
+            ],
+        ])));
     }
 }

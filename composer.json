@@ -15,9 +15,10 @@
         "notification"
     ],
     "require": {
-        "tastyigniter/core": "^4.0",
+        "ably/ably-php": "~1.0",
+        "laravel/reverb": "^1.5",
         "pusher/pusher-php-server": "~7.0",
-        "ably/ably-php": "~1.0"
+        "tastyigniter/core": "^4.0"
     },
     "require-dev": {
         "larastan/larastan": "^3.0",
