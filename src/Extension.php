@@ -14,18 +14,22 @@ use Override;
  */
 class Extension extends BaseExtension
 {
+    public array $singletons = [
+        Manager::class,
+    ];
+
     #[Override]
     public function register(): void
     {
         parent::register();
 
-        Manager::register($this->app);
+        resolve(Manager::class)->register($this->app);
     }
 
     #[Override]
     public function boot(): void
     {
-        Manager::boot($this->app);
+        resolve(Manager::class)->boot($this->app);
     }
 
     #[Override]
