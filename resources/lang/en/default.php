@@ -4,6 +4,7 @@ return [
     'text_reverb' => 'Reverb',
     'text_pusher' => 'Pusher',
     'text_ably' => 'Ably',
+    'text_disabled' => 'Disabled',
 
     'label_provider' => 'Provider',
     'label_app_id' => 'App ID',
