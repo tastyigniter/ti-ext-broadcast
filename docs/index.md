@@ -16,15 +16,17 @@ By default, the extension registers the `/broadcasting/auth` route to handle aut
 
 ## Getting started
 
-1. Navigate to _Admin > Manage > Settings > Broadcast Events_ to configure the extension. You will need to enter your Pusher App ID, Pusher Key, and Pusher Secret.
-2. You must configure and run a queue worker to process broadcast jobs. You can read more about this in the [Queue worker section of the TastyIgniter installation documentation](https://tastyigniter.com/docs/installation#setting-up-the-queue-deamon).
+1. From your TastyIgniter Admin, navigate to _Manage > Settings > Broadcast Settings_ to configure the extension. You will need to enter your Pusher App ID, Pusher Key, and Pusher Secret. Alternatively, you can use providers like [Ably](https://ably.com/) or [Laravel Reverb](https://laravel.com/docs/reverb) for broadcasting.
+2. You must configure and run a queue worker to process broadcast jobs. You can read more about this in the [Queue worker section of the TastyIgniter installation documentation](https://tastyigniter.com/docs/installation#setting-up-the-queue-daemon).
 
 ## Usage
 
+This section explains how to integrate the Broadcast extension into your own extension if you need to send or receive real-time events. The Broadcast extension provides a simple API for broadcasting custom events, listening to system events, and handling authorization for private channels. You can use it to notify users or staff of updates, synchronize data across clients, or trigger actions in real time.
+
 The Broadcast extension handles authorisation for the following broadcast channels:
 
-- `main.user.{userId}`: A private channel for broadcasting events to a specific customer.
-- `admin.user.{userId}`: A private channel for broadcasting events to a specific staff member.
+- `main.users.{userId}`: A private channel for broadcasting events to a specific customer.
+- `admin.users.{userId}`: A private channel for broadcasting events to a specific staff member.
 
 You can broadcast your custom events directly from your code, or you can broadcast other system events by [registering event broadcasts class](#registering-event-broadcasts).
 
@@ -54,13 +56,13 @@ class OrderStatusUpdated implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('admin.user.'.$this->activity->user_id)
+            new PrivateChannel('admin.users.'.$this->activity->user_id)
         ];
     }
 }
 ```
 
-In this example, the event is broadcast on a private channel named `admin.user.{user_id}`.
+In this example, the event is broadcast on a private channel named `admin.users.{userId}`.
 
 For more details, refer to [Laravel's Defining Broadcast Events documentation](https://laravel.com/docs/broadcasting#defining-broadcast-events).
 
@@ -91,12 +93,14 @@ OrderStatusUpdated::dispatch($activity);
 
 ### Receiving broadcasts
 
+To receive broadcasts in your JavaScript code, you can use the `Broadcast` javascript object provided by TastyIgniter. You can listen for events on user authenticated channels or public channels.
+
 You can listen for events on user authenticated channels or public channels as follows:
 
 ```javascript
 // User Authenticated Channel
 Broadcast.user()
-    .listen('eventName', (e) => {
+    .listen(eventName, (e) => {
         console.log(e);
     })
 
