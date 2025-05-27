@@ -32,7 +32,7 @@ class Settings extends Model
                 || self::isAblyConfigured());
     }
 
-    public static function isPusherConfigured()
+    public static function isPusherConfigured(): bool
     {
         return self::get('provider') === 'pusher'
             && strlen((string)self::get('app_id'))
@@ -40,7 +40,7 @@ class Settings extends Model
             && strlen((string)self::get('secret'));
     }
 
-    public static function isReverbConfigured()
+    public static function isReverbConfigured(): bool
     {
         return self::get('provider') === 'reverb'
             && strlen((string)self::get('reverb_app_id'))
@@ -48,7 +48,7 @@ class Settings extends Model
             && strlen((string)self::get('reverb_secret'));
     }
 
-    public static function isAblyConfigured()
+    public static function isAblyConfigured(): bool
     {
         return self::get('provider') === 'ably'
             && strlen((string)self::get('ably_key'));

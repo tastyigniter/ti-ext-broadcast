@@ -14,15 +14,16 @@ beforeEach(function(): void {
     Settings::clearInternalCache();
 });
 
-it('sets configuration values from settings model correctly', function(): void {
-    Settings::set('driver', 'pusher');
+it('sets pusher configuration values from settings model correctly', function(): void {
+    Settings::set('provider', 'pusher');
     Settings::set('app_id', '123');
     Settings::set('key', '123');
     Settings::set('secret', '123');
 
+    app()->forgetInstance(BroadcastManager::class);
     resolve(BroadcastManager::class);
 
-    expect(Settings::get('driver', 'pusher'))->toEqual(config('broadcasting.default'))
+    expect(Settings::get('provider'))->toEqual(config('broadcasting.default'))
         ->and(Settings::get('key'))->toEqual(config('broadcasting.connections.pusher.key'))
         ->and(Settings::get('secret'))->toEqual(config('broadcasting.connections.pusher.secret'))
         ->and(Settings::get('app_id'))->toEqual(config('broadcasting.connections.pusher.app_id'))
@@ -30,9 +31,25 @@ it('sets configuration values from settings model correctly', function(): void {
         ->and(Settings::get('encrypted'))->toEqual(config('broadcasting.connections.pusher.options.encrypted'));
 });
 
+it('sets reverb configuration values from settings model correctly', function(): void {
+    Settings::set('provider', 'reverb');
+    Settings::set('reverb_app_id', '123');
+    Settings::set('reverb_key', '123');
+    Settings::set('reverb_secret', '123');
+
+    app()->forgetInstance(BroadcastManager::class);
+    resolve(BroadcastManager::class);
+
+    expect(Settings::get('provider'))->toEqual(config('broadcasting.default'))
+        ->and(Settings::get('reverb_app_id'))->toEqual(config('broadcasting.connections.reverb.app_id'))
+        ->and(Settings::get('reverb_key'))->toEqual(config('broadcasting.connections.reverb.key'))
+        ->and(Settings::get('reverb_secret'))->toEqual(config('broadcasting.connections.reverb.secret'));
+});
+
 it('returns true if the settings model is configured', function(): void {
     expect(Settings::isConfigured())->toBeFalse();
 
+    Settings::set('provider', 'pusher');
     Settings::set('app_id', '123');
     Settings::set('key', '123');
     Settings::set('secret', '123');
