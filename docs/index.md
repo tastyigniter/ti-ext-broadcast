@@ -21,7 +21,7 @@ By default, the extension registers the `/broadcasting/auth` route to handle aut
 
 ## Usage
 
-This section explains how to integrate the Broadcast extension into your own extension if you need to send or receive real-time events. The Broadcast extension provides a simple API for broadcasting custom events, listening to system events, and handling authorization for private channels. You can use it to notify users or staff of updates, synchronize data across clients, or trigger actions in real time.
+This section covers how to integrate the Broadcast extension into your own extension if you need to send or receive real-time events. The Broadcast extension provides a simple API for broadcasting custom events, listening to system events, and handling authorization for private channels. You can use it to notify users or staff of updates, synchronize data across clients, or trigger actions in real time.
 
 The Broadcast extension handles authorisation for the following broadcast channels:
 
