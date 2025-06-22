@@ -27,9 +27,31 @@ class Settings extends Model
     public static function isConfigured(): bool
     {
         return Igniter::hasDatabase()
+            && (self::isPusherConfigured()
+                || self::isReverbConfigured()
+                || self::isAblyConfigured());
+    }
+
+    public static function isPusherConfigured(): bool
+    {
+        return self::get('provider') === 'pusher'
             && strlen((string)self::get('app_id'))
             && strlen((string)self::get('key'))
             && strlen((string)self::get('secret'));
+    }
+
+    public static function isReverbConfigured(): bool
+    {
+        return self::get('provider') === 'reverb'
+            && strlen((string)self::get('reverb_app_id'))
+            && strlen((string)self::get('reverb_key'))
+            && strlen((string)self::get('reverb_secret'));
+    }
+
+    public static function isAblyConfigured(): bool
+    {
+        return self::get('provider') === 'ably'
+            && strlen((string)self::get('ably_key'));
     }
 
     public static function findRegisteredBroadcasts()
