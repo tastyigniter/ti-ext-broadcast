@@ -30,7 +30,7 @@ class Manager
     public function bindBroadcast($eventCode, $broadcastClass): void
     {
         Event::listen($eventCode, function() use ($broadcastClass): void {
-            $this->dispatch($broadcastClass);
+            $this->dispatch($broadcastClass, func_get_args());
         });
     }
 
