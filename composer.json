@@ -43,7 +43,7 @@
             "name": "Broadcast Events",
             "icon": {
                 "class": "fa fa-bullhorn",
-                "backgroundColor": "#539EC1",
+                "backgroundColor": "#FF4900",
                 "color": "#fff"
             },
             "homepage": "https://tastyigniter.com/marketplace/item/igniter-broadcast"
