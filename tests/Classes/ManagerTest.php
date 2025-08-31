@@ -27,7 +27,6 @@ function callProtectedMethod($class, string $methodName, array $args = []): mixe
 {
     $reflection = new ReflectionClass($class);
     $method = $reflection->getMethod($methodName);
-    $method->setAccessible(true);
 
     return $method->invokeArgs($class, $args);
 }
