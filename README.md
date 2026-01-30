@@ -15,10 +15,6 @@ While the extension is designed to integrate with the [Pusher service](https://p
 
 Documentation can be found on the [TastyIgniter documentation website](https://tastyigniter.com/docs/extensions/broadcast).
 
-## Changelog
-
-Please see [CHANGELOG](https://github.com/tastyigniter/ti-ext-broadcast/blob/master/CHANGELOG.md) for more information on what has changed recently.
-
 ## Reporting issues
 
 If you encounter a bug in this extension, please report it using the [Issue Tracker](https://github.com/tastyigniter/TastyIgniter/issues) on GitHub.
